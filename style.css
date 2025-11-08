@@ -1,48 +1,128 @@
+/* -------------------------------------------------
+   style.css – Dark Theme mit lila Akzenten
+   ------------------------------------------------- */
+
+/* Grundlegende Reset‑ und Box‑Sizing‑Regeln */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+/* Farben */
+:root {
+    --bg-dark: #0a0a0a;          /* sehr dunkles Grau/Schwarz */
+    --text-light: #f0f0f0;       /* fast weiß */
+    --accent-purple: #9b59b6;    /* lila Akzent */
+    --accent-purple-light: #c39bd3;
+}
+
+/* Body */
 body {
-  font-family: Arial, sans-serif;
-  margin: 0;
-  padding: 0;
-  line-height: 1.6;
-  background-color: #f9f9f9;
-  color: #333;
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: var(--bg-dark);
+    color: var(--text-light);
+    line-height: 1.6;
 }
 
-header {
-  background: #005f99;
-  color: white;
-  padding: 1em 0;
-  text-align: center;
+/* Header */
+.site-header {
+    padding: 1rem 2rem;
+    background: rgba(0, 0, 0, 0.6);
+}
+.logo {
+    font-size: 1.8rem;
+    color: var(--accent-purple);
 }
 
-nav a {
-  color: white;
-  margin: 0 10px;
-  text-decoration: none;
-  font-weight: bold;
+/* Hero‑Bereich */
+.hero {
+    /* Platzhalter‑Bild – später durch dein Bild ersetzen */
+    background: url('assets/hero-placeholder.jpg') center/cover no-repeat;
+    height: 80vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
 }
 
-main {
-  padding: 2em;
-  text-align: center;
+/* dunkler Overlay‑Schatten für besseren Text‑Kontrast */
+.hero::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.6);
 }
 
-button {
-  padding: 10px 20px;
-  background: #005f99;
-  border: none;
-  color: white;
-  cursor: pointer;
-  border-radius: 5px;
+/* Inhalt im Hero‑Bereich */
+.hero-content {
+    position: relative;
+    text-align: center;
+    max-width: 800px;
+    padding: 2rem;
+}
+.hero-content h2 {
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+    color: var(--accent-purple-light);
+}
+.hero-content p {
+    font-size: 1.2rem;
+    margin-bottom: 1.5rem;
 }
 
-button:hover {
-  background: #007acc;
+/* Call‑to‑Action‑Button */
+.cta-button {
+    background: var(--accent-purple);
+    color: var(--text-light);
+    border: none;
+    padding: 0.8rem 1.6rem;
+    font-size: 1rem;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background 0.3s, transform 0.2s;
+}
+.cta-button:hover {
+    background: var(--accent-purple-light);
+    transform: translateY(-2px);
 }
 
-footer {
-  text-align: center;
-  padding: 1em;
-  background: #eee;
-  margin-top: 2em;
-  font-size: 0.9em;
+/* Info‑Bereich */
+.info {
+    padding: 3rem 2rem;
+    max-width: 900px;
+    margin: 0 auto;
+}
+.info h3,
+.info h4 {
+    color: var(--accent-purple);
+    margin-top: 1.5rem;
+}
+.info ul {
+    margin-top: 0.5rem;
+    list-style: disc inside;
+}
+
+/* Footer */
+.site-footer {
+    background: rgba(0, 0, 0, 0.8);
+    text-align: center;
+    padding: 1.5rem;
+    font-size: 0.9rem;
+}
+.site-footer a {
+    color: var(--accent-purple-light);
+    text-decoration: none;
+}
+.site-footer a:hover {
+    text-decoration: underline;
+}
+
+/* Responsives Layout */
+@media (max-width: 768px) {
+    .hero-content h2 { font-size: 2rem; }
+    .hero-content p  { font-size: 1rem; }
+    .cta-button       { padding: 0.6rem 1.2rem; }
 }

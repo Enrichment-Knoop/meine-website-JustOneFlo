@@ -1,40 +1,62 @@
 <!DOCTYPE html>
 <html lang="de">
-  <head>
+<head>
+    <!-- Meta‑Informationen -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Meine erste Website</title>
+    <title>MusicMeet – Dein Musik‑Discord</title>
+
+    <!-- Verknüpfung mit CSS -->
     <link rel="stylesheet" href="style.css">
-  </head>
-  <body>
-    <header>
-      <h1>Willkommen auf meiner Website</h1>
-      <nav>
-        <a href="#">Start</a>
-        <a href="#">Über mich</a>
-        <a href="#">Kontakt</a>
-      </nav>
+</head>
+<body>
+
+    <!-- Header (optional, hier nur ein Logo‑Platzhalter) -->
+    <header class="site-header">
+        <h1 class="logo">MusicMeet</h1>
     </header>
 
-    <main>
-      <section>
-        <h2>Mein erstes Projekt</h2>
-        <p>Hier entsteht etwas Spannendes – mit HTML, CSS und JavaScript.</p>
-        <button id="colorButton">Farbe ändern</button>
-      </section>
-    </main>
+    <!-- Hero‑Bereich: Bild‑Hintergrund, kurzer Intro‑Text und Button -->
+    <section class="hero">
+        <div class="hero-content">
+            <h2>Verbinde dich mit Musikern in ganz Deutschland</h2>
+            <p>Finde Mitmusiker, gründe Bands oder entdecke neue Projekte – alles auf einem Discord‑Server.</p>
+            <button id="discordBtn" class="cta-button">Jetzt Discord beitreten</button>
+        </div>
+    </section>
 
-    <footer>
-      <p>© 2025 – erstellt im Enrichment-Kurs „Mit KI zur eigenen Website“</p>
-      <p>
-	  <!-- ===========================================================
-			Impressum - Bitte nicht verändern! (rechtlich verbindlich)
-		=========================================================== -->
-        <a href="impressum.html" target="_blank" rel="noopener noreferrer">Impressum</a>
-		<a href="impressum_eltern.html" target="_blank" rel="noopener noreferrer">Impressum verantwortliche Eltern</a>
-      </p>
+    <!-- Längerer Informationstext -->
+    <section class="info">
+        <h3>Warum MusicMeet?</h3>
+        <p>
+            <!-- Platzhalter‑Text – später durch deinen eigenen Inhalt ersetzen -->
+            MusicMeet ist ein Discord‑Server, der Musikerinnen und Musikern
+            zwischen 14 und 30 Jahren eine zentrale Anlaufstelle bietet.
+            Hier kannst du nach Instrumentalisten suchen, eigene Projekte vorstellen
+            und dich mit Gleichgesinnten vernetzen. Unser Ziel ist es, die
+            Musik‑Community in Deutschland zu stärken und das Gründen von Bands
+            zu erleichtern.
+        </p>
+
+        <h4>Vorteile im Überblick</h4>
+        <ul>
+            <li>Einfaches Finden von Mitmusiker*innen</li>
+            <li>Regelmäßige Jam‑Sessions und Workshops</li>
+            <li>Exklusive Channels für Song‑Feedback und Produktion</li>
+            <li>Community‑Events und Wettbewerbe</li>
+        </ul>
+    </section>
+
+    <!-- Footer mit Impressum‑ und Kontakt‑Link -->
+    <footer class="site-footer">
+        <p>
+            <a href="impressum.html">Impressum</a> |
+            <a href="mailto:kontakt@musicmeet.de">Kontakt</a>
+        </p>
+        <p>&copy; 2025 MusicMeet – Alle Rechte vorbehalten</p>
     </footer>
 
+    <!-- Verknüpfung mit JavaScript -->
     <script src="script.js"></script>
-  </body>
+</body>
 </html>

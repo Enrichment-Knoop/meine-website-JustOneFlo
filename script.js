@@ -1,7 +1,17 @@
-// Einfaches Beispiel für Interaktivität
-const button = document.getElementById("colorButton");
+/* -------------------------------------------------
+   script.js – Öffnet den Discord‑Einladungslink
+   ------------------------------------------------- */
 
-button.addEventListener("click", () => {
-  document.body.style.backgroundColor =
-    document.body.style.backgroundColor === "lightblue" ? "#f9f9f9" : "lightblue";
-});
+// Platzhalter‑URL – später durch deinen echten Einladungslink ersetzen
+const DISCORD_LINK = 'https://discord.gg/DEIN-EINLADUNGSCODE';
+
+// Button-Element holen
+const btn = document.getElementById('discordBtn');
+
+// Klick‑Handler registrieren
+if (btn) {
+    btn.addEventListener('click', () => {
+        // Öffnet den Link in einem neuen Tab
+        window.open(DISCORD_LINK, '_blank');
+    });
+}
