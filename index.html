@@ -1,22 +1,46 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-    <!-- Meta‑Informationen -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MusicMeet – Dein Musik‑Discord</title>
 
-    <!-- Verknüpfung mit CSS -->
+    <!-- Font Awesome (für das Icon im Logo‑Platzhalter) -->
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
+          crossorigin="anonymous"
+          referrerpolicy="no-referrer" />
+
+    <!-- Google‑Font : Noto Serif (alle Gewichte, inkl. Italic) -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,100..900;1,100..900&display=swap"
+          rel="stylesheet">
+
+    <!-- Eigenes Stylesheet -->
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <!-- Header (optional, hier nur ein Logo‑Platzhalter) -->
-    <header class="site-header">
-        <h1 class="logo">MusicMeet</h1>
-    </header>
+    <!-- ==================== NAVBAR ==================== -->
+    <nav class="nav">
+        <div class="container">
+            <!-- Logo – klickt zurück zur Startseite -->
+            <h1 class="logo">
+                <a href="index.html">
+                    <span class="logo-placeholder"></span>MusicMeet
+                </a>
+            </h1>
 
-    <!-- Hero‑Bereich: Bild‑Hintergrund, kurzer Intro‑Text und Button -->
+            <!-- Navigation -->
+            <ul>
+                <li><a href="index.html" class="current">Home</a></li>
+                <li><a href="about.html">Über uns</a></li>
+                <li><a href="benefits.html">Vorteile</a></li>
+                <li><a href="contact.html">Kontakt</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- ==================== HERO ==================== -->
     <section class="hero">
         <div class="hero-content">
             <h2>Verbinde dich mit Musikern in ganz Deutschland</h2>
@@ -25,17 +49,13 @@
         </div>
     </section>
 
-    <!-- Längerer Informationstext -->
+    <!-- ==================== INFO ==================== -->
     <section class="info">
         <h3>Warum MusicMeet?</h3>
         <p>
-            <!-- Platzhalter‑Text – später durch deinen eigenen Inhalt ersetzen -->
-            MusicMeet ist ein Discord‑Server, der Musikerinnen und Musikern
-            zwischen 14 und 30 Jahren eine zentrale Anlaufstelle bietet.
-            Hier kannst du nach Instrumentalisten suchen, eigene Projekte vorstellen
-            und dich mit Gleichgesinnten vernetzen. Unser Ziel ist es, die
-            Musik‑Community in Deutschland zu stärken und das Gründen von Bands
-            zu erleichtern.
+            MusicMeet ist ein Discord‑Server, der Musikerinnen und Musikern zwischen 14 und 30 Jahren
+            eine zentrale Anlaufstelle bietet. Hier kannst du nach Instrumentalisten suchen,
+            eigene Projekte vorstellen und dich mit Gleichgesinnten vernetzen.
         </p>
 
         <h4>Vorteile im Überblick</h4>
@@ -47,16 +67,16 @@
         </ul>
     </section>
 
-    <!-- Footer mit Impressum‑ und Kontakt‑Link -->
+    <!-- ==================== FOOTER ==================== -->
     <footer class="site-footer">
         <p>
             <a href="impressum.html">Impressum</a> |
             <a href="mailto:kontakt@musicmeet.de">Kontakt</a>
         </p>
-        <p>&copy; 2025 MusicMeet – Alle Rechte vorbehalten</p>
+        <p>© 2025 MusicMeet – Alle Rechte vorbehalten</p>
     </footer>
 
-    <!-- Verknüpfung mit JavaScript -->
+    <!-- Eigenes Skript -->
     <script src="script.js"></script>
 </body>
 </html>
