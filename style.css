@@ -1,5 +1,5 @@
 /* -------------------------------------------------
-   style.css – Dark Theme mit hell‑dunkel‑hell Verlauf
+   style.css – Dark Theme, Version 1.4.9
    ------------------------------------------------- */
 
 /* ---- Reset & Grundvariablen ---- */
@@ -15,16 +15,25 @@
 :root {
     --bg-dark:       #0a0a0a;
     --text-light:    #f0f0f0;
+
+    /* Original Lila‑Farben – nur noch für den Discord‑Button‑Gradienten */
     --purple-light:  #9b5cb5;
-    --purple-dark:   #5a2a8c;               /* dunkler Ton des Verlaufs */
+    --purple-dark:   #5a2a8c;
+
+    /* Accent‑Farbe, die **alle** übrigen lila Elemente ersetzen soll */
+    --accent-color:  #A45EE5;   /* gewünschte neue Farbe */
+
     --gradient-purple: linear-gradient(
                            90deg,
                            var(--purple-light),
                            var(--purple-dark),
                            var(--purple-light)
                        );
+
     --glow-color:    rgba(179,126,251,0.6);
+    --shine-color:   #A45EE5;   /* wird nur vom Button verwendet */
     --transition:    all 0.3s ease-in-out;
+    --heading-font:  'Stack Sans Notch', sans-serif;
 }
 
 /* ---- Body ---- */
@@ -43,7 +52,7 @@ body {
 }
 
 /* -------------------------------------------------
-   NAVBAR – smoother Fade‑In
+   LOGO (Bild) & NAVBAR
    ------------------------------------------------- */
 .nav {
     position: fixed;
@@ -74,35 +83,21 @@ body {
     transition: var(--transition);
 }
 
-/* Logo – lila Verlauf */
-.nav .logo a {
+/* Logo‑Bild */
+.logo-img {
+    height: 30px;
+    width: auto;
+    vertical-align: middle;
+    margin-right: 8px;
+}
+
+/* Text‑Logo (falls Bild nicht geladen) */
+.logo a {
     display: flex;
     align-items: center;
-    text-decoration: none;
+    text-decoration: none; /* Keine Unterstreichung für das Logo */
     font-size: 1.4rem;
-    background: var(--gradient-purple);
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-    transition: none;
-}
-.nav .logo a:hover,
-.nav .logo a:focus {
-    background: var(--gradient-purple);
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-}
-.nav .logo a::after,
-.nav .logo a:hover::after,
-.nav .logo a:focus::after { display: none !important; }
-
-.logo-placeholder {
-    width: 30px;
-    height: 30px;
-    background: #555;
-    border-radius: 4px;
-    margin-right: 8px;
+    color: var(--text-light);
 }
 
 /* Navigation‑Links */
@@ -113,27 +108,28 @@ body {
     margin: 0;
     padding: 0;
 }
-.nav li::after { content: none; }
 .nav a {
     position: relative;
     padding: 5px 0;
-    transition: var(--transition);
     color: var(--text-light);
-    text-decoration: none;
-}
-.nav a:hover,
-.nav a.current { color: var(--purple-light); }
-.nav a.current::after,
-.nav a:hover::after {
-    content: "";
-    position: absolute;
-    left: 50%; bottom: -4px;
-    width: 50%; height: 2px;
-    background: var(--purple-light);
-    transform: translateX(-50%);
+    text-decoration: none; /* Keine Unterstreichung standardmäßig */
+    transition: var(--transition);
 }
 
-/* Mobile */
+/* Unterstreichung mit neuer Farbe */
+.nav a:hover,
+.nav a.current {
+    color: var(--accent-color);
+    text-decoration: underline; /* Unterstreichung bei Hover und aktivem Link */
+}
+
+/* Sicherstellen, dass MusicMeet nicht unterstrichen wird */
+.logo a:hover,
+.logo a.current {
+    text-decoration: none; /* Keine Unterstreichung für das Logo */
+}
+
+/* Mobile‑Nav */
 @media (max-width: 700px) {
     .nav .container { flex-direction: column; }
     .nav ul {
@@ -144,15 +140,15 @@ body {
 }
 
 /* -------------------------------------------------
-   HERO – korrekt zentriert
+   HERO – zentriert, weiße Überschrift, kein Shine
    ------------------------------------------------- */
 .hero {
     background: url('images/instruments_purple_yellow.png') center/cover no-repeat;
     height: 100vh;
     position: relative;
     display: flex;
-    align-items: center;          /* vertikal zentrieren */
-    justify-content: center;      /* horizontal zentrieren */
+    align-items: center;
+    justify-content: center;
     text-align: center;
     color: var(--text-light);
     margin-top: 80px;               /* Platz für feste Nav */
@@ -170,27 +166,19 @@ body {
     position: relative;
     max-width: 800px;
     padding: 2rem;
-    transition: opacity 0.4s ease, transform 0.4s ease;
+    transition: opacity .4s ease, transform .4s ease;
 }
 .hide-hero .hero-content {
     opacity: 0;
     transform: translateY(-30px);
 }
 
-/* ---------- Überschrift – dunkler Farbton + Shine ---------- */
+/* Überschrift – weiß, größer, neue Font, kein Shine */
 .hero-content h2 {
-    font-size: 2.5rem;
+    font-family: var(--heading-font);
+    font-size: 3rem;               /* etwas größer */
     margin-bottom: 0.5rem;
-
-    /* dunkler Ton des Farbverlaufs */
-    color: var(--purple-dark);
-
-    /* gleichbleibender Shine (gleicher wie beim Button) */
-    filter:
-        drop-shadow(0 0 2px #A45EE5)   /* innerer Kern */
-        drop-shadow(0 0 4px #A45EE5)   /* erster Halo */
-        drop-shadow(0 0 6px #A45EE5)   /* zweiter Halo */
-        drop-shadow(0 0 8px #A45EE5);  /* äußerer, weicher Schein */
+    color: #ffffff;                /* reinweiß */
 }
 
 /* Absatz */
@@ -201,7 +189,7 @@ body {
     color: var(--text-light);
 }
 
-/* ---------- CTA‑Button – gleicher Shine wie Überschrift ---------- */
+/* CTA‑Button – **unverändert** (nutzt den originalen lila‑Gradient) */
 .cta-button {
     background: var(--gradient-purple);
     color: var(--text-light);
@@ -212,12 +200,11 @@ body {
     border-radius: 4px;
     font-family: "Noto Serif", serif;
     transition: var(--transition);
-    /* Shine */
     filter:
-        drop-shadow(0 0 2px #A45EE5)
-        drop-shadow(0 0 4px #A45EE5)
-        drop-shadow(0 0 6px #A45EE5)
-        drop-shadow(0 0 8px #A45EE5);
+        drop-shadow(0 0 2px var(--shine-color))
+        drop-shadow(0 0 4px var(--shine-color))
+        drop-shadow(0 0 6px var(--shine-color))
+        drop-shadow(0 0 8px var(--shine-color));
 }
 .cta-button:hover { opacity: 0.9; }
 
@@ -227,7 +214,7 @@ body {
 .info {
     opacity: 0;
     transform: translateY(30px);
-    transition: opacity 0.4s ease, transform 0.4s ease;
+    transition: opacity .4s ease, transform .4s ease;
     padding: 3rem 2rem;
     max-width: 900px;
     margin: -2rem auto 0 auto;
@@ -237,10 +224,8 @@ body {
     transform: translateY(0);
 }
 
-/* Schrift im Info‑Bereich */
+/* Schrift im Info‑Bereich – lila‑Überschriften → Accent‑Farbe */
 .info,
-.info h3,
-.info h4,
 .info p,
 .info li {
     font-family: "Noto Serif", serif;
@@ -248,7 +233,7 @@ body {
 }
 .info h3,
 .info h4 {
-    color: var(--purple-light);
+    color: var(--accent-color);
     margin-top: 1.5rem;
 }
 .info ul {
@@ -268,11 +253,11 @@ body {
     font-size: 0.9rem;
     font-family: "Noto Serif", serif;
 }
-.site-footer.visible {
-    opacity: 1;
-}
+.site-footer.visible { opacity: 1; }
+
+/* Footer‑Links → Accent‑Farbe */
 .site-footer a {
-    color: var(--purple-light);
+    color: var(--accent-color);
     text-decoration: none;
 }
 .site-footer a:hover { text-decoration: underline; }
@@ -281,69 +266,7 @@ body {
    RESPONSIVE
    ------------------------------------------------- */
 @media (max-width: 768px) {
-    .hero-content h2 { font-size: 2rem; }
+    .hero-content h2 { font-size: 2.4rem; }
     .hero-content p  { font-size: 1rem; }
     .cta-button      { padding: 0.6rem 1.2rem; }
 }
- *(Version 1.4.0 – unchanged)*  
-
-```js
-/* -------------------------------------------------
-   script.js – Scroll‑Logik (IntersectionObserver)
-   ------------------------------------------------- */
-
-document.addEventListener('DOMContentLoaded', () => {
-    const nav        = document.querySelector('.nav');
-    const hero       = document.querySelector('.hero');
-    const info       = document.querySelector('.info');
-    const footer     = document.querySelector('.site-footer');
-    const trigger    = document.getElementById('scroll-trigger');
-    const discordBtn = document.getElementById('discordBtn');
-
-    /* Navbar‑Fade‑In */
-    window.addEventListener('scroll', () => {
-        if (window.scrollY > 150) {
-            nav.classList.add('active');
-        } else {
-            nav.classList.remove('active');
-        }
-    });
-
-    /* Hero ↔ Info Umschaltung */
-    const heroInfoObserver = new IntersectionObserver(
-        entries => {
-            const entry = entries[0];
-            if (entry.isIntersecting) {
-                hero.classList.add('hide-hero');
-                info.classList.add('show-info');
-            } else {
-                hero.classList.remove('hide-hero');
-                info.classList.remove('show-info');
-            }
-        },
-        { root: null, threshold: 0 }
-    );
-    heroInfoObserver.observe(trigger);
-
-    /* Footer‑Fade‑In */
-    const footerObserver = new IntersectionObserver(
-        entries => {
-            const entry = entries[0];
-            if (entry.isIntersecting) {
-                footer.classList.add('visible');
-            } else {
-                footer.classList.remove('visible');
-            }
-        },
-        { root: null, threshold: 0.1, rootMargin: '0px 0px -80px 0px' }
-    );
-    footerObserver.observe(footer);
-
-    /* Discord‑Button */
-    const DISCORD_LINK = 'https://discord.gg/DEIN-EINLADUNGSCODE'; // ← anpassen
-    if (discordBtn) {
-        discordBtn.addEventListener('click', () => {
-            window.open(DISCORD_LINK, '_blank');
-        });
-    }
-});
