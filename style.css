@@ -85,7 +85,8 @@ body {
 .nav .logo a:focus::after { display: none !important; }
 
 .logo-placeholder {
-    width: 30px; height: 30px;
+    width: 30px;
+    height: 30px;
     background: #555;
     border-radius: 4px;
     margin-right: 8px;
@@ -96,7 +97,8 @@ body {
     display: flex;
     list-style: none;
     gap: 1.5rem;
-    margin: 0; padding: 0;
+    margin: 0;
+    padding: 0;
 }
 .nav li::after { content: none; }
 .nav a {
@@ -154,7 +156,7 @@ body {
     content: "";
     position: absolute;
     inset: 0;
-    background: rgba(0,0,0,0.6);
+    background: rgba(0, 0, 0, 0.6);   /* dunkler Overlay */
 }
 
 /* Inhalt, der ein‑/ausblendet */
@@ -185,12 +187,12 @@ body {
     color: var(--text-light);
 }
 
-/* Button */
+/* CTA‑Button – Padding sorgt für ausreichende Breite */
 .cta-button {
     background: var(--gradient-purple);
     color: var(--text-light);
     border: none;
-    padding: 0.8rem 1.6rem;
+    padding: 0.8rem 1.6rem;          /* genug Innenabstand für langen Text */
     font-size: 1rem;
     cursor: pointer;
     border-radius: 4px;
@@ -238,12 +240,11 @@ body {
 }
 
 /* -------------------------------------------------
-   FOOTER
+   FOOTER – Fade‑In, kein Verschieben
    ------------------------------------------------- */
 .site-footer {
     opacity: 0;
-    transform: translateY(30px);
-    transition: opacity .8s ease-out, transform .8s ease-out;
+    transition: opacity .8s ease-out;
     background: rgba(0,0,0,0.8);
     text-align: center;
     padding: 1.5rem;
@@ -252,7 +253,6 @@ body {
 }
 .site-footer.visible {
     opacity: 1;
-    transform: none;
 }
 .site-footer a {
     color: var(--purple-light);

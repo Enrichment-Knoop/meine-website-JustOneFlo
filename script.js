@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const hero       = document.querySelector('.hero');
     const info       = document.querySelector('.info');
     const footer     = document.querySelector('.site-footer');
-    const trigger    = document.getElementById('scroll‑trigger'); // Marker‑Div
+    const trigger    = document.getElementById('scroll-trigger'); // Marker‑Div
     const discordBtn = document.getElementById('discordBtn');
 
     /* -------------------------------------------------
@@ -24,27 +24,24 @@ document.addEventListener('DOMContentLoaded', () => {
 
     /* -------------------------------------------------
        2. Hero ↔ Info Umschaltung
-          – Wenn der Marker‑Div sichtbar wird, sind wir im
-          unteren Bereich → Hero ausblenden, Info einblenden.
-          – Beim Verlassen des Viewports (nach oben scrollen)
-          geschieht das Gegenteil.
+          – Wenn der Marker‑Div sichtbar wird, blenden wir den
+            unteren Bereich ein und den Hero‑Text aus.
+          – Beim Verlassen (nach oben scrollen) kehren wir zurück.
        ------------------------------------------------- */
     const heroInfoObserver = new IntersectionObserver(
         entries => {
             const entry = entries[0];
             if (entry.isIntersecting) {
-                // Marker im Sichtfeld → unterer Teil aktiv
                 hero.classList.add('hide-hero');
                 info.classList.add('show-info');
             } else {
-                // Marker nicht mehr sichtbar → zurück nach oben
                 hero.classList.remove('hide-hero');
                 info.classList.remove('show-info');
             }
         },
         {
-            root: null,               // viewport
-            threshold: 0,             // schon bei 1 px Sichtbarkeit
+            root: null,
+            threshold: 0          // schon bei 1 px Sichtbarkeit aktiv
         }
     );
     heroInfoObserver.observe(trigger);
@@ -65,8 +62,8 @@ document.addEventListener('DOMContentLoaded', () => {
         },
         {
             root: null,
-            threshold: 0.1,          // 10 % sichtbar → einblenden
-            rootMargin: '0px 0px -80px 0px' // 80 px bevor das Ende erreicht ist
+            threshold: 0.1,                     // 10 % sichtbar → einblenden
+            rootMargin: '0px 0px -80px 0px'      // 80 px bevor das Ende erreicht ist
         }
     );
     footerObserver.observe(footer);
