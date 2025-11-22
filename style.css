@@ -11,38 +11,31 @@
     padding: 0;
 }
 
-/* Lila‑Farben & Verlauf (hell‑dunkel‑hell) */
+/* Farben & Verlauf */
 :root {
-    --bg-dark:       #0a0a0a;   /* sehr dunkles Grau */
-    --text-light:    #f0f0f0;   /* fast weiß */
-
-    /* etwas dunkleres „helles“ Lila (für Links, Hover usw.) */
-    --purple-light:  #9b5cb5;   /* dunkleres Hell‑Lila */
-    --purple-dark:   #5a2a8c;   /* dunkleres Lila */
-
-    /* Verlauf, wird für Logo, Button usw. benutzt */
+    --bg-dark:       #0a0a0a;
+    --text-light:    #f0f0f0;
+    --purple-light:  #9b5cb5;
+    --purple-dark:   #5a2a8c;
     --gradient-purple: linear-gradient(
                            90deg,
                            var(--purple-light),
                            var(--purple-dark),
                            var(--purple-light)
                        );
-
-    /* Glow‑Farbe für den „Shine“ */
     --glow-color:    rgba(179,126,251,0.6);
-
     --transition:    all 0.3s ease-in-out;
 }
 
 /* ---- Body ---- */
 body {
-    font-family: "Montserrat", sans-serif;   /* Haupt‑Font für Navigation usw. */
+    font-family: "Montserrat", sans-serif;
     background-color: var(--bg-dark);
     color: var(--text-light);
     line-height: 1.6;
 }
 
-/* ---- Container (zentrierte Breite) ---- */
+/* ---- Container ---- */
 .container {
     max-width: 1200px;
     margin: 0 auto;
@@ -54,25 +47,21 @@ body {
    ------------------------------------------------- */
 .nav {
     position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
+    top: 0; left: 0; right: 0;
     background-color: transparent;
     transition: var(--transition);
     z-index: 1000;
     text-transform: uppercase;
 }
-
-/* Flex‑Container, damit Logo und Menü auf derselben Höhe bleiben */
 .nav .container {
     display: flex;
     justify-content: space-between;
-    align-items: center;          /* vertikale Zentrierung */
+    align-items: center;
     padding: 30px 0;
     transition: var(--transition);
 }
 
-/* ---------- Logo – immer mit Farbverlauf, kein Hover‑Effekt, kein Unterstrich ---------- */
+/* Logo – lila Verlauf, kein Unterstrich */
 .nav .logo a {
     display: flex;
     align-items: center;
@@ -84,8 +73,6 @@ body {
     color: transparent;
     transition: none;
 }
-
-/* Hover‑Zustand des Logos (unverändert) */
 .nav .logo a:hover,
 .nav .logo a:focus {
     background: var(--gradient-purple);
@@ -93,71 +80,52 @@ body {
     background-clip: text;
     color: transparent;
 }
-
-/* Entfernt mögliche pseudo‑Elemente, die einen Punkt/Unterstrich erzeugen könnten */
 .nav .logo a::after,
 .nav .logo a:hover::after,
-.nav .logo a:focus::after {
-    display: none !important;
-}
+.nav .logo a:focus::after { display: none !important; }
 
-/* Logo‑Platzhalter */
 .logo-placeholder {
-    width: 30px;
-    height: 30px;
+    width: 30px; height: 30px;
     background: #555;
     border-radius: 4px;
     margin-right: 8px;
 }
 
-/* ---------- Navigation‑Links ---------- */
+/* Navigation‑Links */
 .nav ul {
     display: flex;
     list-style: none;
     gap: 1.5rem;
-    margin: 0;
-    padding: 0;
+    margin: 0; padding: 0;
 }
-
-/* Entfernt evtl. Punkte über ::after von <li> */
 .nav li::after { content: none; }
-
-/* Grundstil der Links */
 .nav a {
     position: relative;
     padding: 5px 0;
     transition: var(--transition);
-    color: var(--text-light);    /* Standard = weiß */
+    color: var(--text-light);
     text-decoration: none;
 }
-
-/* Hover‑ und aktive (current) Links → dunkleres Lila */
 .nav a:hover,
-.nav a.current {
-    color: var(--purple-light);
-}
-
-/* Unterstrich nur für Hover bzw. aktuelle Seite */
+.nav a.current { color: var(--purple-light); }
 .nav a.current::after,
 .nav a:hover::after {
     content: "";
     position: absolute;
-    left: 50%;
-    bottom: -4px;
-    width: 50%;
-    height: 2px;
+    left: 50%; bottom: -4px;
+    width: 50%; height: 2px;
     background: var(--purple-light);
     transform: translateX(-50%);
 }
 
-/* Hintergrund bei Scroll → schwarz */
+/* Navbar‑Hintergrund bei Scroll */
 .nav.active {
     background-color: #000;
     box-shadow: 0 2px 8px rgba(0,0,0,0.5);
 }
 .nav.active .container { padding: 20px 0; }
 
-/* Mobile‑Anpassungen */
+/* Mobile */
 @media (max-width: 700px) {
     .nav .container { flex-direction: column; }
     .nav ul {
@@ -168,7 +136,7 @@ body {
 }
 
 /* -------------------------------------------------
-   HERO‑Bereich
+   HERO (oberer Teil)
    ------------------------------------------------- */
 .hero {
     background: url('https://images.unsplash.com/photo-1548284706-24b96b23d6d8?auto=format&fit=crop&w=2070&q=80')
@@ -196,14 +164,12 @@ body {
     padding: 2rem;
     transition: opacity 0.4s ease, transform 0.4s ease;
 }
-
-/* Klasse, die vom JS gesetzt wird → ausblenden */
 .hide-hero .hero-content {
     opacity: 0;
     transform: translateY(-30px);
 }
 
-/* Überschrift – wieder lila */
+/* Text */
 .hero-content h2 {
     font-size: 2.5rem;
     margin-bottom: 0.5rem;
@@ -212,8 +178,6 @@ body {
         0 2px 4px var(--glow-color),
         0 4px 8px var(--glow-color);
 }
-
-/* Absatz – jetzt Noto Serif, weiß */
 .hero-content p {
     font-family: "Noto Serif", serif;
     font-size: 1.1rem;
@@ -221,7 +185,7 @@ body {
     color: var(--text-light);
 }
 
-/* CTA‑Button – Verlauf, Text in Noto Serif */
+/* Button */
 .cta-button {
     background: var(--gradient-purple);
     color: var(--text-light);
@@ -239,7 +203,7 @@ body {
 .cta-button:hover { opacity: 0.9; }
 
 /* -------------------------------------------------
-   INFO‑Bereich (wird sichtbar, wenn Hero ausgeblendet ist)
+   INFO (unterer Teil)
    ------------------------------------------------- */
 .info {
     opacity: 0;
@@ -247,16 +211,14 @@ body {
     transition: opacity 0.4s ease, transform 0.4s ease;
     padding: 3rem 2rem;
     max-width: 900px;
-    margin: -2rem auto 0 auto;   /* nach oben schieben */
+    margin: -2rem auto 0 auto;   /* ein Stück nach oben schieben */
 }
-
-/* Klasse, die vom JS gesetzt wird → einblenden */
 .show-info {
     opacity: 1;
     transform: translateY(0);
 }
 
-/* Alles im Info‑Bereich nutzt Noto Serif */
+/* Schrift im Info‑Bereich */
 .info,
 .info h3,
 .info h4,
@@ -265,22 +227,18 @@ body {
     font-family: "Noto Serif", serif;
     color: var(--text-light);
 }
-
-/* Überschriften im Info‑Bereich – lila Akzent */
 .info h3,
 .info h4 {
     color: var(--purple-light);
     margin-top: 1.5rem;
 }
-
-/* Aufzählung */
 .info ul {
     margin-top: 0.5rem;
     list-style: disc inside;
 }
 
 /* -------------------------------------------------
-   FOOTER – jetzt ebenfalls animierbar
+   FOOTER
    ------------------------------------------------- */
 .site-footer {
     opacity: 0;
@@ -292,24 +250,18 @@ body {
     font-size: 0.9rem;
     font-family: "Noto Serif", serif;
 }
-
-/* Sichtbar, wenn Klasse .visible gesetzt wird */
 .site-footer.visible {
     opacity: 1;
-    transform: translateY(0);
+    transform: none;
 }
-
-/* Footer‑Links */
 .site-footer a {
     color: var(--purple-light);
     text-decoration: none;
 }
-.site-footer a:hover {
-    text-decoration: underline;
-}
+.site-footer a:hover { text-decoration: underline; }
 
 /* -------------------------------------------------
-   RESPONSIVE Feinjustierung
+   RESPONSIVE
    ------------------------------------------------- */
 @media (max-width: 768px) {
     .hero-content h2 { font-size: 2rem; }
