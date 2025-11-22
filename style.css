@@ -16,7 +16,7 @@
     --bg-dark:       #0a0a0a;
     --text-light:    #f0f0f0;
     --purple-light:  #9b5cb5;
-    --purple-dark:   #5a2a8c;
+    --purple-dark:   #5a2a8c;               /* dunkler Ton des Verlaufs */
     --gradient-purple: linear-gradient(
                            90deg,
                            var(--purple-light),
@@ -43,7 +43,7 @@ body {
 }
 
 /* -------------------------------------------------
-   NAVBAR
+   NAVBAR – smoother Fade‑In
    ------------------------------------------------- */
 .nav {
     position: fixed;
@@ -52,6 +52,19 @@ body {
     transition: var(--transition);
     z-index: 1000;
     text-transform: uppercase;
+    overflow: hidden;
+}
+.nav::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: #000;
+    opacity: 0;
+    transition: opacity .4s ease;
+    pointer-events: none;
+}
+.nav.active::before {
+    opacity: 0.85;
 }
 .nav .container {
     display: flex;
@@ -61,7 +74,7 @@ body {
     transition: var(--transition);
 }
 
-/* Logo – lila Verlauf, kein Unterstrich */
+/* Logo – lila Verlauf */
 .nav .logo a {
     display: flex;
     align-items: center;
@@ -120,13 +133,6 @@ body {
     transform: translateX(-50%);
 }
 
-/* Navbar‑Hintergrund bei Scroll */
-.nav.active {
-    background-color: #000;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.5);
-}
-.nav.active .container { padding: 20px 0; }
-
 /* Mobile */
 @media (max-width: 700px) {
     .nav .container { flex-direction: column; }
@@ -138,25 +144,25 @@ body {
 }
 
 /* -------------------------------------------------
-   HERO (oberer Teil)
+   HERO – korrekt zentriert
    ------------------------------------------------- */
 .hero {
-    background: url('https://images.unsplash.com/photo-1548284706-24b96b23d6d8?auto=format&fit=crop&w=2070&q=80')
-                center/cover no-repeat;
+    background: url('images/instruments_purple_yellow.png') center/cover no-repeat;
     height: 100vh;
     position: relative;
     display: flex;
-    align-items: center;
-    justify-content: center;
+    align-items: center;          /* vertikal zentrieren */
+    justify-content: center;      /* horizontal zentrieren */
     text-align: center;
     color: var(--text-light);
     margin-top: 80px;               /* Platz für feste Nav */
+    filter: brightness(0.95);
 }
 .hero::before {
     content: "";
     position: absolute;
     inset: 0;
-    background: rgba(0, 0, 0, 0.6);   /* dunkler Overlay */
+    background: rgba(0, 0, 0, 0.5);
 }
 
 /* Inhalt, der ein‑/ausblendet */
@@ -171,15 +177,23 @@ body {
     transform: translateY(-30px);
 }
 
-/* Text */
+/* ---------- Überschrift – dunkler Farbton + Shine ---------- */
 .hero-content h2 {
     font-size: 2.5rem;
     margin-bottom: 0.5rem;
-    color: var(--purple-light);
-    text-shadow:
-        0 2px 4px var(--glow-color),
-        0 4px 8px var(--glow-color);
+
+    /* dunkler Ton des Farbverlaufs */
+    color: var(--purple-dark);
+
+    /* gleichbleibender Shine (gleicher wie beim Button) */
+    filter:
+        drop-shadow(0 0 2px #A45EE5)   /* innerer Kern */
+        drop-shadow(0 0 4px #A45EE5)   /* erster Halo */
+        drop-shadow(0 0 6px #A45EE5)   /* zweiter Halo */
+        drop-shadow(0 0 8px #A45EE5);  /* äußerer, weicher Schein */
 }
+
+/* Absatz */
 .hero-content p {
     font-family: "Noto Serif", serif;
     font-size: 1.1rem;
@@ -187,20 +201,23 @@ body {
     color: var(--text-light);
 }
 
-/* CTA‑Button – Padding sorgt für ausreichende Breite */
+/* ---------- CTA‑Button – gleicher Shine wie Überschrift ---------- */
 .cta-button {
     background: var(--gradient-purple);
     color: var(--text-light);
     border: none;
-    padding: 0.8rem 1.6rem;          /* genug Innenabstand für langen Text */
+    padding: 0.8rem 1.6rem;
     font-size: 1rem;
     cursor: pointer;
     border-radius: 4px;
     font-family: "Noto Serif", serif;
     transition: var(--transition);
-    box-shadow:
-        0 2px 4px var(--glow-color),
-        0 4px 8px var(--glow-color);
+    /* Shine */
+    filter:
+        drop-shadow(0 0 2px #A45EE5)
+        drop-shadow(0 0 4px #A45EE5)
+        drop-shadow(0 0 6px #A45EE5)
+        drop-shadow(0 0 8px #A45EE5);
 }
 .cta-button:hover { opacity: 0.9; }
 
@@ -213,7 +230,7 @@ body {
     transition: opacity 0.4s ease, transform 0.4s ease;
     padding: 3rem 2rem;
     max-width: 900px;
-    margin: -2rem auto 0 auto;   /* ein Stück nach oben schieben */
+    margin: -2rem auto 0 auto;
 }
 .show-info {
     opacity: 1;
@@ -240,7 +257,7 @@ body {
 }
 
 /* -------------------------------------------------
-   FOOTER – Fade‑In, kein Verschieben
+   FOOTER – Fade‑In
    ------------------------------------------------- */
 .site-footer {
     opacity: 0;
@@ -268,3 +285,65 @@ body {
     .hero-content p  { font-size: 1rem; }
     .cta-button      { padding: 0.6rem 1.2rem; }
 }
+ *(Version 1.4.0 – unchanged)*  
+
+```js
+/* -------------------------------------------------
+   script.js – Scroll‑Logik (IntersectionObserver)
+   ------------------------------------------------- */
+
+document.addEventListener('DOMContentLoaded', () => {
+    const nav        = document.querySelector('.nav');
+    const hero       = document.querySelector('.hero');
+    const info       = document.querySelector('.info');
+    const footer     = document.querySelector('.site-footer');
+    const trigger    = document.getElementById('scroll-trigger');
+    const discordBtn = document.getElementById('discordBtn');
+
+    /* Navbar‑Fade‑In */
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 150) {
+            nav.classList.add('active');
+        } else {
+            nav.classList.remove('active');
+        }
+    });
+
+    /* Hero ↔ Info Umschaltung */
+    const heroInfoObserver = new IntersectionObserver(
+        entries => {
+            const entry = entries[0];
+            if (entry.isIntersecting) {
+                hero.classList.add('hide-hero');
+                info.classList.add('show-info');
+            } else {
+                hero.classList.remove('hide-hero');
+                info.classList.remove('show-info');
+            }
+        },
+        { root: null, threshold: 0 }
+    );
+    heroInfoObserver.observe(trigger);
+
+    /* Footer‑Fade‑In */
+    const footerObserver = new IntersectionObserver(
+        entries => {
+            const entry = entries[0];
+            if (entry.isIntersecting) {
+                footer.classList.add('visible');
+            } else {
+                footer.classList.remove('visible');
+            }
+        },
+        { root: null, threshold: 0.1, rootMargin: '0px 0px -80px 0px' }
+    );
+    footerObserver.observe(footer);
+
+    /* Discord‑Button */
+    const DISCORD_LINK = 'https://discord.gg/DEIN-EINLADUNGSCODE'; // ← anpassen
+    if (discordBtn) {
+        discordBtn.addEventListener('click', () => {
+            window.open(DISCORD_LINK, '_blank');
+        });
+    }
+});
