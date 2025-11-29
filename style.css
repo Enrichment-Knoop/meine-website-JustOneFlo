@@ -1,5 +1,5 @@
 /* -------------------------------------------------
-   style.css – Dark Theme, Version 1.4.23
+   style.css – Dark Theme, Version 1.4.24
    ------------------------------------------------- */
 
 /* Reset */
@@ -9,12 +9,6 @@
     box-sizing: border-box;
     margin: 0;
     padding: 0;
-}
-
-/* Desktop-Layout auf allen Geräten erzwingen */
-html, body {
-    min-width: 1200px;          /* verhindert Umschichtung auf schmalen Displays */
-    overflow-x: auto;           /* erlaubt horizontales Scrollen auf Handy, Desktop-Layout bleibt erhalten */
 }
 
 /* -------------------------------------------------
@@ -72,9 +66,8 @@ body {
     line-height: 1.6;
 }
 
-/* Fixe Desktop-Breite wie am PC (statt max-width) */
 .container {
-    width: 1200px;             /* identisches Layout wie Desktop */
+    max-width: 1200px;      /* wie ursprünglich */
     margin: 0 auto;
     padding: 0 20px;
 }
@@ -300,5 +293,39 @@ body {
 .site-footer a.roboto { font-family: 'Roboto', sans-serif; }
 
 /* -------------------------------------------------
-   WICHTIG: Keine Media-Queries – Desktop-Layout gilt immer
+   RESPONSIVE BREAKPOINTS – wieder wie am Anfang des Tages
    ------------------------------------------------- */
+
+/* Tablet / kleine Laptops – max-width 768px */
+@media (max-width: 768px) {
+    .hero-content h2 { font-size: 2.4rem; }
+    .hero-content p.roboto { font-size: 1rem; }
+    .cta-button { padding: 0.6rem 1.2rem; }
+}
+
+/* Mobile – max-width 480px */
+@media (max-width: 480px) {
+    .nav .container {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 20px 0;
+    }
+    .nav ul {
+        flex-direction: column;
+        gap: 0.8rem;
+        margin-top: 10px;
+        width: 100%;
+    }
+    .nav ul a {
+        padding: 8px 0;
+        width: 100%;
+        text-align: left;
+    }
+    .logo-img { height: 26px; }
+    .hero { height: 70vh; }
+    .hero-content { padding: 1rem; }
+    .hero-content h2 { font-size: 2rem; }
+    .hero-content p.roboto { font-size: 0.95rem; }
+    .cta-button { padding: 0.5rem 1rem; font-size: 0.9rem; }
+    .info { padding: 2rem 1rem; }
+}

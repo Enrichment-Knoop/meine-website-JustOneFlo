@@ -1,6 +1,6 @@
 /* -------------------------------------------------
    script.js – Scroll-Logik (IntersectionObserver)
-   Version 1.4.23
+   Version 1.4.24
    ------------------------------------------------- */
 
 document.addEventListener('DOMContentLoaded', () => {
