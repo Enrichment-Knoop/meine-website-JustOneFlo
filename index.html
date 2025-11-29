@@ -2,6 +2,8 @@
 <html lang="de">
 <head>
     <meta charset="UTF-8">
+    <!-- Responsives Verhalten aktivieren -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MusicMeet – Dein Musik‑Discord</title>
 
     <!-- Font‑Awesome (optional, für Icons) -->
@@ -11,24 +13,29 @@
           referrerpolicy="no-referrer">
 
     <!-- Stylesheet -->
-    <link rel="stylesheet" href="style.css?v=1.4.27">
+    <link rel="stylesheet" href="style.css?v=1.4.28">
 </head>
 <body>
 
     <!-- ==================== NAVBAR ==================== -->
-    <nav class="nav">
+    <nav class="nav" aria-label="Hauptnavigation">
         <div class="container">
-            <h1 class="logo" style="position: relative; z-index: 10;">
+            <h1 class="logo">
                 <a href="index.html">
                     <img src="images/musicmeet_logo.png"
                          alt="MusicMeet Logo"
-                         class="logo-img" style="position: relative; z-index: 10;">
+                         class="logo-img">
                     MusicMeet
                 </a>
             </h1>
 
-            <!-- Navigation – Roboto Font -->
-            <ul class="roboto" style="position: relative; z-index: 10;">
+            <!-- Burger-Button für Mobile -->
+            <button class="nav-toggle" aria-expanded="false" aria-controls="primary-menu" aria-label="Menü öffnen">
+                <span class="burger"></span>
+            </button>
+
+            <!-- Navigation -->
+            <ul id="primary-menu" class="roboto">
                 <li><a href="index.html" class="current">Home</a></li>
                 <li><a href="about.html">Über uns</a></li>
                 <li><a href="benefits.html">Vorteile</a></li>
@@ -84,6 +91,6 @@
     </footer>
 
     <!-- Script -->
-    <script src="script.js?v=1.4.27"></script>
+    <script src="script.js?v=1.4.28"></script>
 </body>
 </html>
