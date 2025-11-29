@@ -1,78 +1,115 @@
 /* -------------------------------------------------
-   script.js – Scroll‑ & Burger‑Logik (Version 1.4.33)
+   script.js – Scroll‑ & Burger‑Logik (Version 1.4.34)
    ------------------------------------------------- */
 
 document.addEventListener('DOMContentLoaded', () => {
-    /* -------------------- Elemente -------------------- */
+    /* -------------------------------------------------
+       0. Grundelemente
+       ------------------------------------------------- */
     const nav        = document.querySelector('.nav');
     const navToggle  = document.querySelector('.nav-toggle');
     const hero       = document.querySelector('.hero');
     const info       = document.querySelector('.info');
     const footer     = document.querySelector('.site-footer');
+    const trigger    = document.getElementById('scroll-trigger'); // nur für Desktop
     const discordBtn = document.getElementById('discordBtn');
 
-    /* -------------------- Navbar‑Fade‑In -------------------- */
+    /* -------------------------------------------------
+       1. Navbar‑Fade‑In (bei jedem Scroll)
+       ------------------------------------------------- */
     window.addEventListener('scroll', () => {
         nav.classList.toggle('active', window.scrollY > 150);
     });
 
-    /* -------------------- Burger‑Menü -------------------- */
+    /* -------------------------------------------------
+       2. Burger‑Menü öffnen / schließen
+       ------------------------------------------------- */
     if (navToggle) {
         navToggle.addEventListener('click', () => {
-            const isOpen = nav.classList.toggle('open');   // true → geöffnet
-            navToggle.setAttribute('aria-expanded', isOpen);
+            const opened = nav.classList.toggle('open');   // true = Menü offen
+            navToggle.setAttribute('aria-expanded', opened);
+            /* Das weiße Kreuz wird ausschließlich über CSS‑Animation
+               (Klasse .open) gesteuert – hier nichts weiter nötig. */
         });
     }
 
-    /* -------------------- Hero ausblenden --------------------
-       Sobald weniger als 1 % des Hero‑Elements im Viewport ist,
-       wird die Klasse .hide‑hero gesetzt. */
-    const heroObserver = new IntersectionObserver(
-        entries => {
-            const entry = entries[0];
-            hero.classList.toggle('hide-', entry.intersectionRatio < 0.01);
-        },
-        {
-            root: null,
-            threshold: [0, 0.01]          // 0 % und 1 % Schwelle
-        }
-    );
-    if (hero) heroObserver.observe(hero);
+    /* -------------------------------------------------
+       3. Scroll‑Logik – Desktop vs. Mobile
+       ------------------------------------------------- */
+    const isMobile = window.innerWidth <= 480;   // Schwelle für „Smartphone“
 
-    /* -------------------- Info einblenden --------------------
-       Sobald mindestens 10 % des Info‑Elements sichtbar sind,
-       wird .show‑info gesetzt und der Observer entfernt (einmalig). */
-    let infoShown = false;               // Flag, damit das Panel nicht wieder verschwindet
-    const infoObserver = new IntersectionObserver(
-        entries => {
-            const entry = entries[0];
-            if (!infoShown && entry.intersectionRatio >= 0.10)                info.classList.add('show-info');
-                infoShown = true;
-                infoObserver.unobserve(info); // kein weiteres Beobachten nötig
+    /* ---------- 3.1 Desktop (wie in Version 1.4.32) ---------- */
+    if (!isMobile) {
+        /* ---- Hero ausblenden (wenn Trigger im Viewport ist) ---- */
+        const heroObserver = new IntersectionObserver(
+            entries => {
+                const entry = entries[0];
+                hero.classList.toggle('hide-hero', entry.isIntersecting);
+            },
+            { root: null, threshold: 0 }               // sofort auslösen
+        );
+        if (trigger) heroObserver.observe(trigger);
+
+        /* ---- Info einblenden (wenn Trigger im Viewport ist) ---- */
+        const infoObserver = new IntersectionObserver(
+            entries => {
+                const entry = entries[0];
+                info.classList.toggle('show-info', entry.isIntersecting);
+            },
+            { root: null, threshold: 0 }
+        );
+        if (trigger) infoObserver.observe(trigger);
+    }
+
+    /* ---------- 3.2 Mobile (reines Scroll‑Event) ---------- */
+    if (isMobile) {
+        let infoShown = false;                     // verhindert mehrfaches Ausblenden
+        const heroHeight = hero ? hero.offsetHeight : 0;
+
+        const onScrollMobile = () => {
+            const scrollY = window.scrollY;
+
+            /* ---- 3.2.1 Hero ausblenden (nach 50 % seiner Höhe) ---- */
+            if (hero) {
+                const hideHero = scrollY > heroHeight * 0.5;   // 50 % des Hero‑Bereichs
+                hero.classList.toggle('hide-hero', hideHero);
             }
-        },
-        {
-            root: null,
-            threshold: 0.10,            // 10 % sichtbar → auslösen
-            rootMargin: '0px 0px -30% 0px' // schon 30 % über dem unteren Rand triggern
-        }
-    );
-    if (info) infoObserver.observe(info);
 
-    /* -------------------- Footer einblenden -------------------- */
+            /* ---- 3.2.2 Info einblenden (früh genug) ---- */
+            if (info && !infoShown) {
+                const infoTop = info.getBoundingClientRect().top; // Abstand zum Viewport‑Oben
+                const viewportHeight = window.innerHeight;
+
+                // Sobald das Info‑Element höchstens 30 px unter dem unteren Viewport‑Rand liegt
+                if (infoTop < viewportHeight - 30) {
+                    info.classList.add('show-info');
+                    infoShown = true;               // nie wieder entfernen
+                }
+            }
+        };
+
+        // Direkt beim Laden prüfen (falls die Seite bereits gescrollt ist)
+        onScrollMobile();
+
+        // Scroll‑ und Resize‑Events (Resize ist wichtig, weil die Chrome‑Bar die Viewport‑Höhe ändert)
+        window.addEventListener('scroll', onScrollMobile);
+        window.addEventListener('resize', onScrollMobile);
+    }
+
+    /* -------------------------------------------------
+       4. Footer‑Fade‑In (gemeinsam für beide Varianten)
+       ------------------------------------------------- */
     const footerObserver = new IntersectionObserver(
         entries => {
-            footer.classList.toggle('visible', entries[0].is);
+            footer.classList.toggle('visible', entries[0].isIntersecting);
         },
-        {
-            root: null,
-            threshold: 0.1,
-            rootMargin: '0px 0px -80px 0px'
-        }
+        { root: null, threshold: 0.1, rootMargin: '0px 0px -80px 0px' }
     );
     if (footer) footerObserver.observe(footer);
 
-    /* -------------------- Discord‑Button -------------------- */
+    /* -------------------------------------------------
+       5. Discord‑Button
+       ------------------------------------------------- */
     const DISCORD_LINK = 'https://discord.gg/DEIN-EINLADUNGSCODE'; // ← anpassen
     if (discordBtn) {
         discordBtn.addEventListener('click', () => {
