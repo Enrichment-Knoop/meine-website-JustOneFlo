@@ -1,5 +1,5 @@
 /* -------------------------------------------------
-   script.js – Scroll- & Burger-Logik (Version 1.4.37)
+   script.js – Scroll- & Burger-Logik (Version 1.4.38)
    ------------------------------------------------- */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -12,10 +12,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const trigger    = document.getElementById('scroll-trigger'); // Desktop-Trigger
     const discordBtn = document.getElementById('discordBtn');
 
-    // Entfernt: Scroll-Animation des Headers (kein nav.active mehr)
-    // -> Keine Scroll-Listener für Header-Hintergrund nötig
+    // Header: dauerhaft schwarz – kein Scroll-Handler nötig
 
-    // Burger-Menü öffnen/schließen (Icon -> weißes Kreuz via CSS)
+    // Burger-Menü öffnen/schließen (Icon -> weißes Kreuz via CSS .nav.open)
     if (navToggle) {
         navToggle.addEventListener('click', () => {
             const opened = nav.classList.toggle('open');
@@ -23,11 +22,11 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Gerätespezifische Logik für Hero/Info (Desktop unverändert, Mobile stabil)
+    // Gerätespezifische Logik (Desktop unverändert, Mobile stabil)
     const isMobile = window.matchMedia('(max-width: 480px)').matches;
 
     if (!isMobile) {
-        // DESKTOP: Original-Verhalten wie die funktionierende v1.4.32
+        // DESKTOP: Original-Verhalten (wie in der funktionierenden v1.4.32)
         const heroInfoObserver = new IntersectionObserver(
             entries => {
                 const entry = entries[0];
@@ -37,6 +36,7 @@ document.addEventListener('DOMContentLoaded', () => {
             { root: null, threshold: 0 }
         );
         if (trigger) heroInfoObserver.observe(trigger);
+
     } else {
         // MOBILE: Stabiler Scroll-Handler (unabhängig von Chrome-Adressleiste)
         let infoShown = false;
@@ -47,25 +47,37 @@ document.addEventListener('DOMContentLoaded', () => {
         };
         recalc();
 
+        // Schwellenwerte für Mobilgeräte
+        const MOBILE_HERO_HIDE_RATIO    = 0.45; // Hero ausblenden nach ~45% seiner Höhe
+        const MOBILE_INFO_SHOW_RATIO    = 0.70; // Info zeigen ab ~70% der Hero-Höhe gescrollt
+        const MOBILE_INFO_VIEW_FRACTION = 0.60; // Alternative: Info-Top < 60% der Viewport-Höhe
+
         const onScrollMobile = () => {
             const y = window.scrollY || document.documentElement.scrollTop;
 
-            // Hero früher ausblenden (ca. nach 35% der Hero-Höhe)
+            // 1) Hero ausblenden, sobald ~45% des Hero-Bereichs gescrollt sind
             if (hero) {
-                const hide = y > heroHeight * 0.35;
+                const hide = y > (heroHeight * MOBILE_HERO_HIDE_RATIO);
                 hero.classList.toggle('hide-hero', hide);
             }
 
-            // Info früh zeigen und sichtbar lassen
+            // 2) Info einblenden – erst im unteren Bereich, dann dauerhaft sichtbar
             if (info && !infoShown) {
                 const infoTop = info.getBoundingClientRect().top;
-                if (infoTop < window.innerHeight - 60) {
+
+                // Variante A: basierend auf Scrollweg relativ zur Hero-Höhe
+                const conditionByScroll = y >= (heroHeight * MOBILE_INFO_SHOW_RATIO);
+                // Variante B: basierend auf Position des Info-Top im Viewport
+                const conditionByViewport = infoTop < (window.innerHeight * MOBILE_INFO_VIEW_FRACTION);
+
+                if (conditionByScroll || conditionByViewport) {
                     info.classList.add('show-info');
-                    infoShown = true; // bleibt sichtbar
+                    infoShown = true; // nicht wieder entfernen -> kein Flackern
                 }
             }
         };
 
+        // Initial prüfen und Events setzen
         onScrollMobile();
         window.addEventListener('scroll', onScrollMobile, { passive: true });
         window.addEventListener('resize', () => { recalc(); onScrollMobile(); });

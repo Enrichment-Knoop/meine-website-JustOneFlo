@@ -1,5 +1,5 @@
 /* -------------------------------------------------
-   style.css – Dark Theme, Version 1.4.37
+   style.css – Dark Theme, Version 1.4.38
    ------------------------------------------------- */
 
 /* Reset */
@@ -11,7 +11,7 @@
     padding: 0;
 }
 
-/* Fonts (optional, falls vorhanden) */
+/* Fonts */
 @font-face {
     font-family: 'StackSansNotch';
     src: url('fonts/StackSansNotch-VariableFont_wght.woff2') format('woff2'),
@@ -55,20 +55,15 @@ body {
     padding: 0 20px;
 }
 
-/* NAVBAR – dauerhaft schwarzer Balken, ohne Scroll-Animation */
+/* NAVBAR – dauerhaft schwarzer Balken */
 .nav {
     position: fixed;
     top: 0; left: 0; right: 0;
-    background-color: #000;        /* dauerhaft schwarz */
+    background-color: #000; /* kein Overlay, keine Animation */
     z-index: 1000;
     text-transform: uppercase;
-    /* keine Transition/Overlay mehr */
-    transition: none;
     overflow: visible;
 }
-/* Overlay & Aktiv-Zustand komplett entfernt */
-/* .nav::before und .nav.active entfallen */
-
 .nav .container {
     display: flex;
     justify-content: space-between;
@@ -94,7 +89,6 @@ body {
 }
 .logo a:hover,
 .logo a:focus { color: var(--header-accent); }
-.logo a::after { content: none; }
 
 /* Desktop-Navigation */
 .nav ul {
@@ -132,7 +126,7 @@ body {
 .nav ul a:hover::after,
 .nav ul a.current::after { opacity: 1; }
 
-/* Burger-Button (Standard: Desktop versteckt) */
+/* Burger-Button (Desktop: versteckt) */
 .nav-toggle {
     display: none;
     width: 40px;
@@ -230,7 +224,7 @@ body {
 }
 .cta-button:hover { opacity: .9; }
 
-/* INFO */
+/* INFO – Roboto-Regular erzwingen */
 .info {
     opacity: 0;
     transform: translateY(30px);
@@ -240,9 +234,18 @@ body {
     margin: -2rem auto 0 auto;
 }
 .show-info { opacity: 1; transform: translateY(0); }
-.info,
+
+/* Roboto-Regular für alle Texte im Info-Bereich */
+.info h3,
+.info h4,
 .info p,
-.info li { font-family: "Noto Serif", serif; color: var(--text-light); }
+.info ul,
+.info li {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 400;
+    color: var(--text-light);
+}
+
 .info h3, .info h4 {
     color: var(--accent-color);
     margin-top: 1.5rem;
