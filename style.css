@@ -1,8 +1,8 @@
 /* -------------------------------------------------
-   style.css – Dark Theme, Version 1.4.13
+   style.css – Dark Theme, Version 1.4.22
    ------------------------------------------------- */
 
-/* ---- Reset & Grundvariablen ---- */
+/* Reset */
 *,
 *::before,
 *::after {
@@ -12,60 +12,63 @@
 }
 
 /* -------------------------------------------------
-   Lokaler Font‑Import
+   Lokale Fonts
    ------------------------------------------------- */
 @font-face {
     font-family: 'StackSansNotch';
     src: url('fonts/StackSansNotch-VariableFont_wght.woff2') format('woff2'),
-         url('fonts/StackSansNotch-VariableFont_wght.ttf')  format('truetype');
+         url('fonts/StackSansNotch-VariableFont_wght.ttf') format('truetype');
     font-weight: 200 700;
     font-display: swap;
 }
 
-/* Farben & Verlauf */
+@font-face {
+    font-family: 'Roboto';
+    src: url('fonts/Roboto-Regular.woff2') format('woff2'),
+         url('fonts/Roboto-Regular.ttf') format('truetype');
+    font-weight: 400;
+    font-display: swap;
+}
+
+/* Hilfsklasse: Roboto anwenden, ohne andere Styles zu ändern */
+.roboto { font-family: 'Roboto', sans-serif; }
+
+/* Farben & Variablen */
 :root {
     --bg-dark:       #0a0a0a;
     --text-light:    #f0f0f0;
 
-    /* Originale Lila‑Farben – nur noch für den Discord‑Button‑Gradienten */
+    /* Akzent im Layout (Info-Überschriften, Footer-Links etc.) */
+    --accent-color:  #A45EE5;
+
+    /* Header-spezifischer Akzent (Navigation/Logo-Hover) */
+    --header-accent: #A45EE5;
+
+    /* Für Button-Gradient (unverändert lassen) */
     --purple-light:  #9b5cb5;
     --purple-dark:   #5a2a8c;
 
-    /* Accent‑Farbe für alle anderen lila Elemente */
-    --accent-color:  #A45EE5;
-
-    --gradient-purple: linear-gradient(
-                           90deg,
-                           var(--purple-light),
-                           var(--purple-dark),
-                           var(--purple-light)
-                       );
+    --gradient-purple: linear-gradient(90deg, var(--purple-light), var(--purple-dark), var(--purple-light));
 
     --glow-color:    rgba(179,126,251,0.6);
     --shine-color:   #A45EE5;
     --transition:    all 0.3s ease-in-out;
 
-    /* Schrift für Header‑Logo und Hero‑Überschrift */
+    /* Headline-Font (Logo & Hero-H2) */
     --heading-font:  'StackSansNotch', sans-serif;
 }
 
-/* ---- Body ---- */
+/* Body & Container */
 body {
     font-family: "Montserrat", sans-serif;
     background-color: var(--bg-dark);
     color: var(--text-light);
     line-height: 1.6;
 }
-
-/* ---- Container ---- */
-.container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 20px;
-}
+.container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
 
 /* -------------------------------------------------
-   LOGO (Bild) & NAVBAR
+   NAVBAR / HEADER
    ------------------------------------------------- */
 .nav {
     position: fixed;
@@ -73,7 +76,7 @@ body {
     background-color: transparent;
     transition: var(--transition);
     z-index: 1000;
-    text-transform: uppercase;          /* bleibt für die Navigations‑Links */
+    text-transform: uppercase; /* Gilt für Navigation; Logo wird unten ausgenommen */
     overflow: hidden;
 }
 .nav::before {
@@ -83,9 +86,10 @@ body {
     background: #000;
     opacity: 0;
     transition: opacity .4s ease;
-    pointer: none;
+    pointer-events: none;
 }
 .nav.active::before { opacity: 0.85; }
+
 .nav .container {
     display: flex;
     justify-content: space-between;
@@ -94,28 +98,29 @@ body {
     transition: var(--transition);
 }
 
-/* Logo‑Bild */
-.logo-img {
-    height: 30px;
-    width: auto;
-    vertical-align: middle;
-    margin-right: 8px;
-}
+/* Logo */
+.logo-img { height: 30px; width: auto; vertical-align: middle; margin-right: 8px; }
 
-/* Text‑Logo – keine Großschreibung, nie unterstrichen, lokale Font */
+/* Logo-Text – nie unterstrichen, keine Uppercase-Transformation; Hover mit sanfter Farb-Transition */
 .logo a {
     display: flex;
     align-items: center;
-    text-decoration: none;               /* nie unterstreichen */
     font-size: 1.4rem;
-    font-family: var(--heading-font);    /* StackSansNotch */
+    font-family: var(--heading-font);
     color: var(--text-light);
-    text-transform: none;                /* verhindert UPPERCASE */
+    text-decoration: none;
+    text-transform: none;           /* verhindert Uppercase aus .nav */
+    transition: var(--transition);  /* sanfter Farbwechsel wie bei Nav-Links */
 }
 .logo a:hover,
-.logo a:focus { text-decoration: none; }
+.logo a:focus {
+    text-decoration: none;          /* kein Unterstrich */
+    color: var(--header-accent);    /* beim Hover lila */
+}
+/* Sicherheit: kein Balken-Pseudo-Element am Logo */
+.logo a::after { content: none; display: none; }
 
-/* Navigation‑Links */
+/* Navigation – gezielt nur Links in der UL ansprechen, nicht das Logo */
 .nav ul {
     display: flex;
     list-style: none;
@@ -123,54 +128,44 @@ body {
     margin: 0;
     padding: 0;
 }
-.nav a {
+.nav ul a {
     position: relative;
     padding: 5px 0;
     color: var(--text-light);
-    text-decoration: none;               /* keine Standard‑Unterstreichung */
+    text-decoration: none;        /* keine native Unterstreichung */
     transition: var(--transition);
 }
 
-/* Hover‑Farbe, aber **keine** zusätzliche obere Linie */
-.nav a:hover,
-.nav a.current {
-    color: var(--accent-color);
-}
+/* Hover- und aktiver Zustand – nur Farbe ändern */
+.nav ul a:hover,
+.nav ul a.current { color: var(--header-accent); }
 
-/* ---- Balken‑Unterstreich‑Effekt (alter Stil) ---- */
-.nav a::after,
-.nav a.current::after,
-.nav a:hover::after {
+/* Unterstrich-Balken (alter Effekt) nur für Nav-Links */
+.nav ul a::after,
+.nav ul a.current::after,
+.nav ul a:hover::after {
     content: "";
     position: absolute;
     left: 50%;
-    bottom: -4px;               /* Abstand zum Text */
+    bottom: -4px;
     width: 50%;
     height: 2px;
-    background: var(--accent-color);
+    background: var(--header-accent);
     transform: translateX(-50%);
     opacity: 0;
     transition: opacity .3s ease;
 }
+.nav ul a:hover::after,
+.nav ul a.current::after { opacity: 1; }
 
-/* Sichtbar, wenn aktiv oder hovered */
-.nav a:hover::after,
-.nav a.current::after {
-    opacity: 1;
-}
-
-/* Mobile‑Nav */
+/* Mobile-Nav */
 @media (max-width: 700px) {
     .nav .container { flex-direction: column; }
-    .nav ul {
-        flex-direction: column;
-        gap: 0.8rem;
-        margin-top: 10px;
-    }
+    .nav ul { flex-direction: column; gap: 0.8rem; margin-top: 10px; }
 }
 
 /* -------------------------------------------------
-   HERO – zentriert, weiße Überschrift, kein Shine
+   HERO
    ------------------------------------------------- */
 .hero {
     background: url('images/instruments_purple_yellow.png') center/cover no-repeat;
@@ -181,7 +176,7 @@ body {
     justify-content: center;
     text-align: center;
     color: var(--text-light);
-    margin-top: 80px;               /* Platz für feste Nav */
+    margin-top: 80px; /* Platz für feste Nav */
     filter: brightness(0.95);
 }
 .hero::before {
@@ -191,19 +186,16 @@ body {
     background: rgba(0, 0, 0, 0.5);
 }
 
-/* Inhalt, der ein‑/ausblendet */
+/* Inhalt */
 .hero-content {
     position: relative;
     max-width: 800px;
     padding: 2rem;
     transition: opacity .4s ease, transform .4s ease;
 }
-.hide-hero .hero-content {
-    opacity: 0;
-    transform: translateY(-30px);
-}
+.hide-hero .hero-content { opacity: 0; transform: translateY(-30px); }
 
-/* Überschrift – lokaler Font, weiß, größer */
+/* Hero-Überschrift – StackSansNotch (weiß) */
 .hero-content h2 {
     font-family: var(--heading-font);
     font-size: 3rem;
@@ -211,24 +203,27 @@ body {
     color: #ffffff;
 }
 
-/* Absatz */
-.hero-content p {
-    font-family: "Noto Serif", serif;
+/* Absatz über dem Button – wie vorher (Spacing & Größe) */
+.hero-content p.roboto {
+    font-family: 'Roboto', sans-serif;
     font-size: 1.1rem;
-    margin-bottom: 1.5rem;
+    margin-bottom: 1.5rem;   /* Abstand zum Button unverändert */
     color: var(--text-light);
 }
 
-/* CTA‑Button – unverändert (lila‑Gradient, Shine) */
+/* -------------------------------------------------
+   CTA-Button – Optik exakt wie vorher, nur Font = StackSansNotch
+   ------------------------------------------------- */
 .cta-button {
-    background: var(--gradient-purple);
+    background: var(--gradient-purple);  /* unverändert */
     color: var(--text-light);
     border: none;
     padding: 0.8rem 1.6rem;
     font-size: 1rem;
     cursor: pointer;
     border-radius: 4px;
-    font-family: "Noto Serif", serif;
+    font-family: 'StackSansNotch', sans-serif; /* Button nutzt StackSansNotch */
+    font-weight: 600;                            /* Variable-Font mittlere Stärke */
     transition: var(--transition);
     filter:
         drop-shadow(0 0 2px var(--shine-color))
@@ -239,7 +234,7 @@ body {
 .cta-button:hover { opacity: 0.9; }
 
 /* -------------------------------------------------
-   INFO (unterer Teil)
+   INFO
    ------------------------------------------------- */
 .info {
     opacity: 0;
@@ -249,30 +244,36 @@ body {
     max-width: 900px;
     margin: -2rem auto 0 auto;
 }
-.show-info {
-    opacity: 1;
-    transform: translateY(0);
-}
+.show-info { opacity: 1; transform: translateY(0); }
 
-/* Schrift im Info‑Bereich – lila‑Überschriften → Accent‑Farbe */
+/* Standard-Farben beibehalten */
 .info,
 .info p,
-.info li {
-    font-family: "Noto Serif", serif;
-    color: var(--text-light);
+.info li { font-family: "Noto Serif", serif; color: var(--text-light); }
+
+/* Roboto auf Ziel-Texten durch .roboto-Klasse (aus HTML) */
+.info.roboto,
+.info p.roboto,
+.info li.roboto,
+.info h3.roboto,
+.info h4.roboto { font-family: 'Roboto', sans-serif; }
+
+/* Vorteile-Liste – LI in Roboto, ohne andere Styles zu ändern */
+.info ul.roboto li {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 400;
 }
+
+/* Überschriften im Info-Bereich – Akzentfarbe wie zuvor */
 .info h3,
 .info h4 {
     color: var(--accent-color);
     margin-top: 1.5rem;
 }
-.info ul {
-    margin-top: 0.5rem;
-    list-style: disc inside;
-}
+.info ul { margin-top: 0.5rem; list-style: disc inside; }
 
 /* -------------------------------------------------
-   FOOTER – Fade‑In
+   FOOTER
    ------------------------------------------------- */
 .site-footer {
     opacity: 0;
@@ -281,20 +282,44 @@ body {
     text-align: center;
     padding: 1.5rem;
     font-size: 0.9rem;
-    font-family: "Noto Serif", serif;
+    font-family: "Noto Serif", serif; /* durch .roboto überschreibbar */
 }
 .site-footer.visible { opacity: 1; }
-.site-footer a {
-    color: var(--accent-color);
-    text-decoration: none;
-}
+.site-footer a { color: var(--accent-color); text-decoration: none; }
 .site-footer a:hover { text-decoration: underline; }
 
+/* Roboto im Footer via Klassen im HTML */
+.site-footer.roboto,
+.site-footer p.roboto,
+.site-footer a.roboto { font-family: 'Roboto', sans-serif; }
+
 /* -------------------------------------------------
-   RESPONSIVE (nur Tablet‑Breakpoints, unverändert)
+   RESPONSIVE BREAKPOINTS (wie zuvor)
    ------------------------------------------------- */
 @media (max-width: 768px) {
     .hero-content h2 { font-size: 2.4rem; }
-    .hero-content p  { font-size: 1rem; }
-    .cta-button      { padding: 0.6rem 1.2rem; }
+    .hero-content p.roboto { font-size: 1rem; }
+    .cta-button { padding: 0.6rem 1.2rem; }
+}
+
+@media (max-width: 480px) {
+    .nav .container {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 20px 0;
+    }
+    .nav ul {
+        flex-direction: column;
+        gap: 0.8rem;
+        margin-top: 10px;
+        width: 100%;
+    }
+    .nav ul a { padding: 8px 0; width: 100%; text-align: left; }
+    .logo-img { height: 26px; }
+    .hero { height: 70vh; }
+    .hero-content { padding: 1rem; }
+    .hero-content h2 { font-size: 2rem; }
+    .hero-content p.roboto { font-size: 0.95rem; }
+    .cta-button { padding: 0.5rem 1rem; font-size: 0.9rem; }
+    .info { padding: 2rem 1rem; }
 }

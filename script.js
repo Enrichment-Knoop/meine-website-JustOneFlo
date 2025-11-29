@@ -1,55 +1,42 @@
 /* -------------------------------------------------
-   script.js – Scroll‑Logik (IntersectionObserver)
+   script.js – Scroll-Logik (IntersectionObserver)
+   Version 1.4.22
    ------------------------------------------------- */
 
 document.addEventListener('DOMContentLoaded', () => {
-    const nav        = document.querySelector('.nav');
-    const hero       = document.querySelector('.hero');
-    const info       = document.querySelector('.info');
-    const footer     = document.querySelector('.site-footer');
-    const trigger    = document.getElementById('scroll-trigger');
+    const nav    = document.querySelector('.nav');
+    const hero   = document.querySelector('.hero');
+    const info   = document.querySelector('.info');
+    const footer = document.querySelector('.site-footer');
+    const trigger = document.getElementById('scroll-trigger');
     const discordBtn = document.getElementById('discordBtn');
 
-    /* Navbar‑Fade‑In */
+    /* Navbar Fade-In (Hintergrund abdunkeln bei Scroll) */
     window.addEventListener('scroll', () => {
-        if (window.scrollY > 150) {
-            nav.classList.add('active');
-        } else {
-            nav.classList.remove('active');
-        }
+        nav.classList.toggle('active', window.scrollY > 150);
     });
 
     /* Hero ↔ Info Umschaltung */
     const heroInfoObserver = new IntersectionObserver(
         entries => {
             const entry = entries[0];
-            if (entry.isIntersecting) {
-                hero.classList.add('hide-hero');
-                info.classList.add('show-info');
-            } else {
-                hero.classList.remove('hide-hero');
-                info.classList.remove('show-info');
-            }
+            hero.classList.toggle('hide-hero', entry.isIntersecting);
+            info.classList.toggle('show-info', entry.isIntersecting);
         },
         { root: null, threshold: 0 }
     );
-    heroInfoObserver.observe(trigger);
+    if (trigger) heroInfoObserver.observe(trigger);
 
-    /* Footer‑Fade‑In */
+    /* Footer Fade-In */
     const footerObserver = new IntersectionObserver(
         entries => {
-            const entry = entries[0];
-            if (entry.isIntersecting) {
-                footer.classList.add('visible');
-            } else {
-                footer.classList.remove('visible');
-            }
+            footer.classList.toggle('visible', entries[0].isIntersecting);
         },
         { root: null, threshold: 0.1, rootMargin: '0px 0px -80px 0px' }
     );
-    footerObserver.observe(footer);
+    if (footer) footerObserver.observe(footer);
 
-    /* Discord‑Button */
+    /* Discord-Button */
     const DISCORD_LINK = 'https://discord.gg/DEIN-EINLADUNGSCODE'; // ← anpassen
     if (discordBtn) {
         discordBtn.addEventListener('click', () => {

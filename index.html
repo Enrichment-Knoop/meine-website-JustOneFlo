@@ -2,17 +2,18 @@
 <html lang="de">
 <head>
     <meta charset="UTF-8">
+    <!-- Viewport für responsives Verhalten -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MusicMeet – Dein Musik‑Discord</title>
 
-    <!-- Font‑Awesome (Icon im Logo) -->
+    <!-- Font‑Awesome (optional, für Icons) -->
     <link rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
           crossorigin="anonymous"
           referrerpolicy="no-referrer">
 
-    <!-- Eigenes Stylesheet – Cache‑Bust -->
-    <link rel="stylesheet" href="style.css?v=1.4.13">
+    <!-- Stylesheet (Cache‑Bust optional) -->
+    <link rel="stylesheet" href="style.css?v=1.4.22">
 </head>
 <body>
 
@@ -28,7 +29,8 @@
                 </a>
             </h1>
 
-            <ul>
+            <!-- Navigation – Roboto Font -->
+            <ul class="roboto">
                 <li><a href="index.html" class="current">Home</a></li>
                 <li><a href="about.html">Über uns</a></li>
                 <li><a href="benefits.html">Vorteile</a></li>
@@ -37,30 +39,37 @@
         </div>
     </nav>
 
-    <!-- ==================== HERO (oberer Teil) ==================== -->
+    <!-- ==================== HERO ==================== -->
     <section class="hero">
         <div class="hero-content">
             <h2>Verbinde dich mit Musikern in ganz Deutschland</h2>
-            <p>Finde Mitmusiker, gründe Bands oder entdecke neue Projekte – alles auf einem Discord‑Server.</p>
+
+            <p class="roboto">
+                Finde Mitmusiker, gründe Bands oder entdecke neue Projekte – alles auf einem Discord‑Server.
+            </p>
+
+            <!-- Button: Optik wie vorher, Font jetzt StackSansNotch -->
             <button id="discordBtn" class="cta-button">Jetzt Discord beitreten</button>
         </div>
     </section>
 
-    <!-- *** MARKER – wird vom Skript beobachtet *** -->
+    <!-- Trigger für IntersectionObserver -->
     <div id="scroll-trigger"></div>
 
-    <!-- ==================== INFO (unterer Teil) ==================== -->
+    <!-- ==================== INFO ==================== -->
     <section class="info">
-        <h3>Warum MusicMeet?</h3>
-        <p>
+        <h3 class="roboto">Warum MusicMeet?</h3>
+
+        <p class="roboto">
             MusicMeet ist ein Discord‑Server, der Musikerinnen und Musikern zwischen 14 und 30 Jahren
             eine zentrale Anlaufstelle bietet. Hier kannst du nach Instrumentalisten suchen,
             eigene Projekte vorstellen und dich mit Gleichgesinnten vernetzen.
         </p>
 
-        <h4>Vorteile im Überblick</h4>
-        <ul>
-            <li>Einfaches Finden von **Musikern**</li>
+        <h4 class="roboto">Vorteile im Überblick</h4>
+        <!-- Liste nutzt Roboto; LI-Font wird in CSS gezielt überschrieben -->
+        <ul class="roboto">
+            <li>Einfaches Finden von Musikern</li>
             <li>Regelmäßige Jam‑Sessions und Workshops</li>
             <li>Exklusive Channels für Song‑Feedback und Produktion</li>
             <li>Community‑Events und Wettbewerbe</li>
@@ -69,14 +78,14 @@
 
     <!-- ==================== FOOTER ==================== -->
     <footer class="site-footer">
-        <p>
+        <p class="roboto">
             <a href="impressum.html">Impressum</a> |
             <a href="mailto:kontakt@musicmeet.de">Kontakt</a>
         </p>
-        <p>© 2025 MusicMeet – Alle Rechte vorbehalten</p>
+        <p class="roboto">© 2025 MusicMeet – Alle Rechte vorbehalten</p>
     </footer>
 
-    <!-- Eigenes Skript – Cache‑Bust -->
-    <script src="script.js?v=1.4.13"></script>
+    <!-- Script (Cache‑Bust optional) -->
+    <script src="script.js?v=1.4.22"></script>
 </body>
 </html>
