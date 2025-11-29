@@ -1,5 +1,5 @@
 /* -------------------------------------------------
-   style.css – Dark Theme, Version 1.4.9
+   style.css – Dark Theme, Version 1.4.14
    ------------------------------------------------- */
 
 /* ---- Reset & Grundvariablen ---- */
@@ -11,17 +11,28 @@
     padding: 0;
 }
 
+/* -------------------------------------------------
+   Lokaler Font‑Import
+   ------------------------------------------------- */
+@font-face {
+    font-family: 'StackSansNotch';
+    src: url('fonts/StackSansNotch-VariableFont_wght.woff2') format('woff2'),
+         url('fonts/StackSansNotch-VariableFont_wght.ttf')  format('truetype');
+    font-weight: 200 700;
+    font-display: swap;
+}
+
 /* Farben & Verlauf */
 :root {
     --bg-dark:       #0a0a0a;
     --text-light:    #f0f0f0;
 
-    /* Original Lila‑Farben – nur noch für den Discord‑Button‑Gradienten */
+    /* Originale Lila‑Farben – nur noch für den Discord‑Button‑Gradienten */
     --purple-light:  #9b5cb5;
     --purple-dark:   #5a2a8c;
 
-    /* Accent‑Farbe, die **alle** übrigen lila Elemente ersetzen soll */
-    --accent-color:  #A45EE5;   /* gewünschte neue Farbe */
+    /* Accent‑Farbe für alle anderen lila Elemente */
+    --accent-color:  #A45EE5;
 
     --gradient-purple: linear-gradient(
                            90deg,
@@ -31,9 +42,11 @@
                        );
 
     --glow-color:    rgba(179,126,251,0.6);
-    --shine-color:   #A45EE5;   /* wird nur vom Button verwendet */
+    --shine-color:   #A45EE5;
     --transition:    all 0.3s ease-in-out;
-    --heading-font:  'Stack Sans Notch', sans-serif;
+
+    /* Schrift für Header‑Logo und Hero‑Überschrift */
+    --heading-font:  'StackSansNotch', sans-serif;
 }
 
 /* ---- Body ---- */
@@ -60,7 +73,7 @@ body {
     background-color: transparent;
     transition: var(--transition);
     z-index: 1000;
-    text-transform: uppercase;
+    text-transform: uppercase;          /* bleibt für die Navigations‑Links */
     overflow: hidden;
 }
 .nav::before {
@@ -72,9 +85,8 @@ body {
     transition: opacity .4s ease;
     pointer-events: none;
 }
-.nav.active::before {
-    opacity: 0.85;
-}
+.nav.active::before { opacity: 0.85; }
+
 .nav .container {
     display: flex;
     justify-content: space-between;
@@ -91,14 +103,18 @@ body {
     margin-right: 8px;
 }
 
-/* Text‑Logo (falls Bild nicht geladen) */
+/* Text‑Logo – keine Großschreibung, nie unterstrichen, lokale Font */
 .logo a {
     display: flex;
     align-items: center;
-    text-decoration: none; /* Keine Unterstreichung für das Logo */
+    text-decoration: none;               /* nie unterstreichen */
     font-size: 1.4rem;
+    font-family: var(--heading-font);    /* StackSansNotch */
     color: var(--text-light);
+    text-transform: none;                /* verhindert UPPERCASE */
 }
+.logo a:hover,
+.logo a:focus { text-decoration: none; }
 
 /* Navigation‑Links */
 .nav ul {
@@ -112,31 +128,34 @@ body {
     position: relative;
     padding: 5px 0;
     color: var(--text-light);
-    text-decoration: none; /* Keine Unterstreichung standardmäßig */
+    text-decoration: none;
     transition: var(--transition);
 }
 
-/* Unterstreichung mit neuer Farbe */
+/* Hover‑Farbe (keine Text‑Unterstreichung) */
 .nav a:hover,
 .nav a.current {
     color: var(--accent-color);
-    text-decoration: underline; /* Unterstreichung bei Hover und aktivem Link */
 }
 
-/* Sicherstellen, dass MusicMeet nicht unterstrichen wird */
-.logo a:hover,
-.logo a.current {
-    text-decoration: none; /* Keine Unterstreichung für das Logo */
+/* ---- Balken‑Unterstreich‑Effekt (alter Stil) ---- */
+.nav a::after,
+.nav a.current::after,
+.nav a:hover::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    bottom: -4px;
+    width: 50%;
+    height: 2px;
+    background: var(--accent-color);
+    transform: translateX(-50%);
+    opacity: 0;
+    transition: opacity .3s ease;
 }
-
-/* Mobile‑Nav */
-@media (max-width: 700px) {
-    .nav .container { flex-direction: column; }
-    .nav ul {
-        flex-direction: column;
-        gap: 0.8rem;
-        margin-top: 10px;
-    }
+.nav a:hover::after,
+.nav a.current::after {
+    opacity: 1;
 }
 
 /* -------------------------------------------------
@@ -173,12 +192,12 @@ body {
     transform: translateY(-30px);
 }
 
-/* Überschrift – weiß, größer, neue Font, kein Shine */
+/* Überschrift – lokaler Font, weiß, größer */
 .hero-content h2 {
     font-family: var(--heading-font);
-    font-size: 3rem;               /* etwas größer */
+    font-size: 3rem;
     margin-bottom: 0.5rem;
-    color: #ffffff;                /* reinweiß */
+    color: #ffffff;
 }
 
 /* Absatz */
@@ -189,7 +208,7 @@ body {
     color: var(--text-light);
 }
 
-/* CTA‑Button – **unverändert** (nutzt den originalen lila‑Gradient) */
+/* CTA‑Button – unverändert (lila‑Gradient, Shine) */
 .cta-button {
     background: var(--gradient-purple);
     color: var(--text-light);
@@ -254,8 +273,6 @@ body {
     font-family: "Noto Serif", serif;
 }
 .site-footer.visible { opacity: 1; }
-
-/* Footer‑Links → Accent‑Farbe */
 .site-footer a {
     color: var(--accent-color);
     text-decoration: none;
@@ -263,10 +280,51 @@ body {
 .site-footer a:hover { text-decoration: underline; }
 
 /* -------------------------------------------------
-   RESPONSIVE
+   RESPONSIVE BREAKPOINTS
    ------------------------------------------------- */
+
+/* Tablet / kleine Laptops – max‑width 768 px */
 @media (max-width: 768px) {
     .hero-content h2 { font-size: 2.4rem; }
     .hero-content p  { font-size: 1rem; }
     .cta-button      { padding: 0.6rem 1.2rem; }
+}
+
+/* Mobile – max‑width 480 px */
+@media (max-width: 480px) {
+    /* Navbar – vertikale Anordnung */
+    .nav .container {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 20px 0;
+    }
+
+    .nav ul {
+        flex-direction: column;
+        gap: 0.8rem;
+        margin-top: 10px;
+        width: 100%;
+    }
+
+    .nav a {
+        padding: 8px 0;
+        width: 100%;
+        text-align: left;
+    }
+
+    /* Logo‑Größe etwas kleiner */
+    .logo-img { height: 26px; }
+
+    /* Hero – reduziert Höhe, Text zentriert */
+    .hero { height: 70vh; }
+    .hero-content { padding: 1rem; }
+
+    .hero-content h2 { font-size: 2rem; }
+    .hero-content p  { font-size: 0.95rem; }
+
+    /* Button – kompakter */
+    .cta-button { padding: 0.5rem 1rem; font-size: 0.9rem; }
+
+    /* Info‑Bereich – weniger Padding */
+    .info { padding: 2rem 1rem; }
 }
