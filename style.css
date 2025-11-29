@@ -1,8 +1,8 @@
 /* -------------------------------------------------
-   style.css – Dark Theme, Version 1.4.29
+   style.css – Dark Theme, Version 1.4.30
    ------------------------------------------------- */
 
-/* Reset */
+/* -------------------- Reset -------------------- */
 *,
 *::before,
 *::after {
@@ -11,9 +11,7 @@
     padding: 0;
 }
 
-/* -------------------------------------------------
-   Lokale Fonts
-   ------------------------------------------------- */
+/* -------------------- Fonts -------------------- */
 @font-face {
     font-family: 'StackSansNotch';
     src: url('fonts/StackSansNotch-VariableFont_wght.woff2') format('woff2'),
@@ -30,22 +28,22 @@
 }
 .roboto { font-family: 'Roboto', sans-serif; }
 
-/* Farben & Variablen */
+/* -------------------- Farben & Variablen -------------------- */
 :root {
-    --bg-dark:       #0a0a0a;
-    --text-light:    #f0f0f0;
-    --accent-color:  #A45EE5;
-    --header-accent: #A45EE5;
-    --purple-light:  #9b5cb5;
-    --purple-dark:   #5a2a8c;
+    --bg-dark:        #0a0a0a;
+    --text-light:     #f0f0f0;
+    --accent-color:   #A45EE5;
+    --header-accent:  #A45EE5;
+    --purple-light:   #9b5cb5;
+    --purple-dark:    #5a2a8c;
     --gradient-purple: linear-gradient(90deg, var(--purple-light), var(--purple-dark), var(--purple-light));
-    --glow-color:    rgba(179,126,251,0.6);
-    --shine-color:   #A45EE5;
-    --transition:    all 0.3s ease-in-out;
-    --heading-font:  'StackSansNotch', sans-serif;
+    --glow-color:     rgba(179,126,251,0.6);
+    --shine-color:    #A45EE5;
+    --transition:     all 0.3s ease-in-out;
+    --heading-font:   'StackSansNotch', sans-serif;
 }
 
-/* Body & Container */
+/* -------------------- Grundlayout -------------------- */
 body {
     font-family: "Montserrat", sans-serif;
     background-color: var(--bg-dark);
@@ -58,9 +56,7 @@ body {
     padding: 0 20px;
 }
 
-/* -------------------------------------------------
-   NAVBAR / HEADER
-   ------------------------------------------------- */
+/* -------------------- NAVBAR -------------------- */
 .nav {
     position: fixed;
     top: 0; left: 0; right: 0;
@@ -88,7 +84,7 @@ body {
     align-items: center;
     padding: 30px 0;
     position: relative;
-    z-index: 1;                     /* über dem schwarzen Overlay */
+    z-index: 1;                     /* über dem dunklen Overlay */
 }
 
 /* Logo */
@@ -145,18 +141,16 @@ body {
 .nav ul a:hover::after,
 .nav ul a.current::after { opacity: 1; }
 
-/* -------------------------------------------------
-   BURGER‑BUTTON (mobile)
-   ------------------------------------------------- */
+/* -------------------- BURGER‑BUTTON -------------------- */
 .nav-toggle {
-    display: none;                 /* Desktop: versteckt */
+    display: none;                 /* erst mobil sichtbar */
     width: 40px;
     height: 40px;
     border: none;
     background: transparent;
     cursor: pointer;
     position: relative;
-    z-index: 2;                     /* über dem Overlay */
+    z-index: 2;
 }
 .nav-toggle .burger,
 .nav-toggle .burger::before,
@@ -186,9 +180,7 @@ body {
     top: 0;
 }
 
-/* -------------------------------------------------
-   HERO
-   ------------------------------------------------- */
+/* -------------------- HERO -------------------- */
 .hero {
     background: url('images/instruments_purple_yellow.png') center/cover no-repeat;
     height: 100vh;
@@ -198,7 +190,7 @@ body {
     justify-content: center;
     text-align: center;
     color: var(--text-light);
-    margin-top: 80px;               /* Platz für fixe Nav */
+    margin-top: 80px;               /* Platz für die fixe Nav */
     filter: brightness(0.95);
 }
 .hero::before {
@@ -217,7 +209,7 @@ body {
 }
 .hide-hero .hero-content { opacity: 0; transform: translateY(-30px); }
 
-/* Hero‑Überschrift */
+/* Headline */
 .hero-content h2 {
     font-family: var(--heading-font);
     font-size: 3rem;
@@ -233,9 +225,7 @@ body {
     color: var(--text-light);
 }
 
-/* -------------------------------------------------
-   CTA‑Button
-   ------------------------------------------------- */
+/* -------------------- CTA‑Button -------------------- */
 .cta-button {
     background: var(--gradient-purple);
     color: var(--text-light);
@@ -255,9 +245,7 @@ body {
 }
 .cta-button:hover { opacity: .9; }
 
-/* -------------------------------------------------
-   INFO
-   ------------------------------------------------- */
+/* -------------------- INFO -------------------- */
 .info {
     opacity: 0;
     transform: translateY(30px);
@@ -281,9 +269,7 @@ body {
 .info h4 { color: var(--accent-color); margin-top: 1.5rem; }
 .info ul { margin-top: .5rem; list-style: disc inside; }
 
-/* -------------------------------------------------
-   FOOTER
-   ------------------------------------------------- */
+/* -------------------- FOOTER -------------------- */
 .site-footer {
     opacity: 0;
     transition: opacity .8s ease-out;
@@ -295,4 +281,75 @@ body {
 }
 .site-footer.visible { opacity: 1; }
 .site-footer a { color: var(--accent-color); text-decoration: none; }
-.site-footer a:hover { text-decoration: underline;
+.site-footer a:hover { text-decoration: underline; }
+.site-footer.roboto,
+.site-footer p.roboto,
+.site-footer a.roboto { font-family: 'Roboto', sans-serif; }
+
+/* -------------------- RESPONSIVE BREAKPOINTS -------------------- */
+
+/* Tablet / kleine Laptops */
+@media (max-width: 768px) {
+    .hero-content h2 { font-size: 2.4rem; }
+    .hero-content p.roboto { font-size: 1rem; }
+    .cta-button { padding: .6rem 1.2rem; }
+}
+
+/* Smartphones (≤ 480 px) */
+@media (max-width: 480px) {
+
+    /* Header – Burger sichtbar, Logo zentriert */
+    .nav-toggle { display: inline-block; }
+
+    .nav .container {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        padding: 12px 0;
+    }
+
+    .logo-img { height: 26px; margin-right: 6px; }
+    .logo a {
+        font-size: 1.2rem;
+        justify-content: center;
+        width: 100%;
+    }
+
+    /* Navigation – zunächst versteckt */
+    .nav ul {
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+        max-height: 0;               /* geschlossen */
+        overflow: hidden;
+        margin-top: 8px;
+        transition: max-height .35s ease;
+        background: rgba(0,0,0,0.85);
+        padding: 0;
+    }
+
+    /* Wenn das Menü geöffnet ist */
+    .nav.open ul {
+        max-height: 260px;           /* genug Platz für 4 Links */
+        padding: 12px 0;
+    }
+
+    .nav ul a {
+        padding: 8px 0;
+        width: 100%;
+        text-align: center;
+    }
+
+    /* Unterstreich‑Balken auf Mobilgeräten deaktivieren (optional) */
+    .nav ul a::after { display: none; }
+
+    /* Hero – etwas kompakter */
+    .hero { height: 70vh; }
+    .hero-content { padding: 1rem; }
+    .hero-content h2 { font-size: 2rem; }
+    .hero-content p.roboto { font-size: .95rem; }
+
+    .cta-button { padding: .5rem 1rem; font-size: .95rem; }
+
+    .info { padding: 2rem 1rem; }
+}

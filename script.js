@@ -1,6 +1,5 @@
 /* -------------------------------------------------
-   script.js – Scroll- & Burger-Logik
-   Version 1.4.28
+   script.js – Scroll‑ & Burger‑Logik (Version 1.4.30)
    ------------------------------------------------- */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -12,32 +11,37 @@ document.addEventListener('DOMContentLoaded', () => {
     const trigger    = document.getElementById('scroll-trigger');
     const discordBtn = document.getElementById('discordBtn');
 
-    /* Navbar Fade-In (Hintergrund abdunkeln bei Scroll) */
+    /* ---------- Navbar‑Fade‑In (Scroll) ---------- */
     window.addEventListener('scroll', () => {
         nav.classList.toggle('active', window.scrollY > 150);
     });
 
-    /* Burger-Menü Toggle (Mobile) */
+    /* ---------- Burger‑Menü öffnen / schließen ---------- */
     if (navToggle) {
         navToggle.addEventListener('click', () => {
-            const expanded = navToggle.getAttribute('aria-expanded') === 'true';
-            navToggle.setAttribute('aria-expanded', (!expanded).toString());
-            nav.classList.toggle('open', !expanded);
+            const isOpen = nav.classList.toggle('open'); // true → geöffnet
+            navToggle.setAttribute('aria-expanded', isOpen);
+            // Das Kreuz‑/Burger‑Icon wechselt automatisch dank CSS‑Animation
         });
     }
 
-    /* Hero ↔ Info Umschaltung */
+    /* ---------- Hero ↔ Info ein‑/ausblenden (Scroll) ----------
+       Auf Smartphones wird das Ausblenden deaktiviert, weil das
+       Trigger‑Element sofort im Viewport liegt. */
     const heroInfoObserver = new IntersectionObserver(
         entries => {
             const entry = entries[0];
-            hero.classList.toggle('hide-hero', entry.isIntersecting);
-            info.classList.toggle('show-info', entry.isIntersecting);
+            const isMobile = window.innerWidth <= 480;
+            if (!isMobile) {
+                hero.classList.toggle('hide-hero', entry.isIntersecting);
+                info.classList.toggle('show-info', entry.isIntersecting);
+            }
         },
         { root: null, threshold: 0 }
     );
     if (trigger) heroInfoObserver.observe(trigger);
 
-    /* Footer Fade-In */
+    /* ---------- Footer Fade‑In ---------- */
     const footerObserver = new IntersectionObserver(
         entries => {
             footer.classList.toggle('visible', entries[0].isIntersecting);
@@ -46,7 +50,7 @@ document.addEventListener('DOMContentLoaded', () => {
     );
     if (footer) footerObserver.observe(footer);
 
-    /* Discord-Button */
+    /* ---------- Discord‑Button ---------- */
     const DISCORD_LINK = 'https://discord.gg/DEIN-EINLADUNGSCODE'; // ← anpassen
     if (discordBtn) {
         discordBtn.addEventListener('click', () => {

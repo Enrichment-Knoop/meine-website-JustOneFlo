@@ -2,24 +2,25 @@
 <html lang="de">
 <head>
     <meta charset="UTF-8">
-    <!-- Responsives Verhalten aktivieren -->
+    <!-- Viewport aktivieren – nötig für das mobile Layout -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MusicMeet – Dein Musik‑Discord</title>
 
-    <!-- Font‑Awesome (optional, für Icons) -->
+    <!-- Font‑Awesome (nur für das Burger‑Icon, falls du ein Icon verwenden willst) -->
     <link rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
           crossorigin="anonymous"
           referrerpolicy="no-referrer">
 
-    <!-- Stylesheet -->
-    <link rel="stylesheet" href="style.css?v=1.4.29">
+    <!-- Eigenes Stylesheet -->
+    <link rel="stylesheet" href="style.css?v=1.4.30">
 </head>
 <body>
 
     <!-- ==================== NAVBAR ==================== -->
     <nav class="nav" aria-label="Hauptnavigation">
         <div class="container">
+            <!-- Logo -->
             <h1 class="logo">
                 <a href="index.html">
                     <img src="images/musicmeet_logo.png"
@@ -29,7 +30,7 @@
                 </a>
             </h1>
 
-            <!-- Burger‑Button für Mobile -->
+            <!-- Burger‑Button (nur mobil) -->
             <button class="nav-toggle"
                     aria-expanded="false"
                     aria-controls="primary-menu"
@@ -56,12 +57,12 @@
                 Finde Mitmusiker, gründe Bands oder entdecke neue Projekte – alles auf einem Discord‑Server.
             </p>
 
-            <!-- Button: Optik wie vorher, Font StackSansNotch -->
+            <!-- CTA‑Button -->
             <button id="discordBtn" class="cta-button">Jetzt Discord beitreten</button>
         </div>
     </section>
 
-    <!-- Trigger für IntersectionObserver -->
+    <!-- Trigger‑Element für den Intersection‑Observer -->
     <div id="scroll-trigger"></div>
 
     <!-- ==================== INFO ==================== -->
@@ -93,7 +94,7 @@
         <p class="roboto">© 2025 MusicMeet – Alle Rechte vorbehalten</p>
     </footer>
 
-    <!-- Script -->
-    <script src="script.js?v=1.4.29"></script>
+    <!-- Eigenes Script -->
+    <script src="script.js?v=1.4.30"></script>
 </body>
 </html>
