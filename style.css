@@ -1,5 +1,5 @@
 /* -------------------------------------------------
-   style.css – Dark Theme, Version 1.4.14
+   style.css – Dark Theme, Version 1.4.13
    ------------------------------------------------- */
 
 /* ---- Reset & Grundvariablen ---- */
@@ -83,10 +83,9 @@ body {
     background: #000;
     opacity: 0;
     transition: opacity .4s ease;
-    pointer-events: none;
+    pointer: none;
 }
 .nav.active::before { opacity: 0.85; }
-
 .nav .container {
     display: flex;
     justify-content: space-between;
@@ -128,11 +127,11 @@ body {
     position: relative;
     padding: 5px 0;
     color: var(--text-light);
-    text-decoration: none;
+    text-decoration: none;               /* keine Standard‑Unterstreichung */
     transition: var(--transition);
 }
 
-/* Hover‑Farbe (keine Text‑Unterstreichung) */
+/* Hover‑Farbe, aber **keine** zusätzliche obere Linie */
 .nav a:hover,
 .nav a.current {
     color: var(--accent-color);
@@ -145,7 +144,7 @@ body {
     content: "";
     position: absolute;
     left: 50%;
-    bottom: -4px;
+    bottom: -4px;               /* Abstand zum Text */
     width: 50%;
     height: 2px;
     background: var(--accent-color);
@@ -153,9 +152,21 @@ body {
     opacity: 0;
     transition: opacity .3s ease;
 }
+
+/* Sichtbar, wenn aktiv oder hovered */
 .nav a:hover::after,
 .nav a.current::after {
     opacity: 1;
+}
+
+/* Mobile‑Nav */
+@media (max-width: 700px) {
+    .nav .container { flex-direction: column; }
+    .nav ul {
+        flex-direction: column;
+        gap: 0.8rem;
+        margin-top: 10px;
+    }
 }
 
 /* -------------------------------------------------
@@ -280,51 +291,10 @@ body {
 .site-footer a:hover { text-decoration: underline; }
 
 /* -------------------------------------------------
-   RESPONSIVE BREAKPOINTS
+   RESPONSIVE (nur Tablet‑Breakpoints, unverändert)
    ------------------------------------------------- */
-
-/* Tablet / kleine Laptops – max‑width 768 px */
 @media (max-width: 768px) {
     .hero-content h2 { font-size: 2.4rem; }
     .hero-content p  { font-size: 1rem; }
     .cta-button      { padding: 0.6rem 1.2rem; }
-}
-
-/* Mobile – max‑width 480 px */
-@media (max-width: 480px) {
-    /* Navbar – vertikale Anordnung */
-    .nav .container {
-        flex-direction: column;
-        align-items: flex-start;
-        padding: 20px 0;
-    }
-
-    .nav ul {
-        flex-direction: column;
-        gap: 0.8rem;
-        margin-top: 10px;
-        width: 100%;
-    }
-
-    .nav a {
-        padding: 8px 0;
-        width: 100%;
-        text-align: left;
-    }
-
-    /* Logo‑Größe etwas kleiner */
-    .logo-img { height: 26px; }
-
-    /* Hero – reduziert Höhe, Text zentriert */
-    .hero { height: 70vh; }
-    .hero-content { padding: 1rem; }
-
-    .hero-content h2 { font-size: 2rem; }
-    .hero-content p  { font-size: 0.95rem; }
-
-    /* Button – kompakter */
-    .cta-button { padding: 0.5rem 1rem; font-size: 0.9rem; }
-
-    /* Info‑Bereich – weniger Padding */
-    .info { padding: 2rem 1rem; }
 }
