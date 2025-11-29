@@ -1,5 +1,5 @@
 /* -------------------------------------------------
-   style.css – Dark Theme, Version 1.4.30
+   style.css – Dark Theme, Version 1.4.31
    ------------------------------------------------- */
 
 /* -------------------- Reset -------------------- */
@@ -64,7 +64,7 @@ body {
     transition: var(--transition);
     z-index: 1000;
     text-transform: uppercase;
-    overflow: visible;               /* wichtig für das Burger‑Overlay */
+    overflow: visible;
 }
 .nav::before {
     content: "";
@@ -84,7 +84,7 @@ body {
     align-items: center;
     padding: 30px 0;
     position: relative;
-    z-index: 1;                     /* über dem dunklen Overlay */
+    z-index: 1;
 }
 
 /* Logo */
@@ -99,7 +99,7 @@ body {
     text-transform: none;
     transition: var(--transition);
     position: relative;
-    z-index: 2;                     /* immer vorne */
+    z-index: 2;
 }
 .logo a:hover,
 .logo a:focus { color: var(--header-accent); }
@@ -159,7 +159,7 @@ body {
     display: block;
     width: 24px;
     height: 2px;
-    background: var(--text-light);
+    background: var(--text-light);   /* weißes Kreuz */
     position: absolute;
     left: 50%;
     transform: translateX(-50%);
@@ -167,9 +167,9 @@ body {
 }
 .nav-toggle .burger { top: 50%; transform: translate(-50%, -50%); }
 .nav-toggle .burger::before { top: -8px; }
-.nav-toggle .burger::after  { top: 8px; }
+.nav .burger::after  { top: 8px; }
 
-/* Wenn das Menü geöffnet ist → Kreuz */
+/* Öffnet‑Zustand → Kreuz */
 .nav.open .nav-toggle .burger { opacity: 0; }
 .nav.open .nav-toggle .burger::before {
     transform: translateX(-50%) rotate(45deg);
@@ -199,8 +199,6 @@ body {
     inset: 0;
     background: rgba(0,0,0,0.5);
 }
-
-/* Inhalt */
 .hero-content {
     position: relative;
     max-width: 800px;
@@ -208,16 +206,12 @@ body {
     transition: opacity .4s ease, transform .4s ease;
 }
 .hide-hero .hero-content { opacity: 0; transform: translateY(-30px); }
-
-/* Headline */
 .hero-content h2 {
     font-family: var(--heading-font);
     font-size: 3rem;
     margin-bottom: .5rem;
     color: #fff;
 }
-
-/* Absatz */
 .hero-content p.roboto {
     font-family: 'Roboto', sans-serif;
     font-size: 1.1rem;
@@ -225,7 +219,7 @@ body {
     color: var(--text-light);
 }
 
-/* -------------------- CTA‑Button -------------------- */
+/* -------------------- CTA‑BUTTON -------------------- */
 .cta-button {
     background: var(--gradient-purple);
     color: var(--text-light);
@@ -255,7 +249,6 @@ body {
     margin: -2rem auto 0 auto;
 }
 .show-info { opacity: 1; transform: translateY(0); }
-
 .info,
 .info p,
 .info li { font-family: "Noto Serif", serif; color: var(--text-light); }
@@ -298,14 +291,14 @@ body {
 /* Smartphones (≤ 480 px) */
 @media (max-width: 480px) {
 
-    /* Header – Burger sichtbar, Logo zentriert */
+    /* Header – Logo oben, Burger darunter, Menü darunter */
     .nav-toggle { display: inline-block; }
 
     .nav .container {
-        flex-direction: row;
-        justify-content: space-between;
+        flex-direction: column;          /* Logo → Burger → Menü */
         align-items: center;
         padding: 12px 0;
+        gap: 8px;
     }
 
     .logo-img { height: 26px; margin-right: 6px; }
@@ -322,13 +315,13 @@ body {
         width: 100%;
         max-height: 0;               /* geschlossen */
         overflow: hidden;
-        margin-top: 8px;
+        margin-top: 0;
         transition: max-height .35s ease;
         background: rgba(0,0,0,0.85);
         padding: 0;
     }
 
-    /* Wenn das Menü geöffnet ist */
+    /* Menü geöffnet → sichtbar */
     .nav.open ul {
         max-height: 260px;           /* genug Platz für 4 Links */
         padding: 12px 0;
