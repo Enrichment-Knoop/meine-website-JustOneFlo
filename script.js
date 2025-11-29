@@ -1,5 +1,5 @@
 /* -------------------------------------------------
-   script.js – Scroll- & Burger-Logik (Version 1.4.36)
+   script.js – Scroll- & Burger-Logik (Version 1.4.37)
    ------------------------------------------------- */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -12,10 +12,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const trigger    = document.getElementById('scroll-trigger'); // Desktop-Trigger
     const discordBtn = document.getElementById('discordBtn');
 
-    // Navbar abdunkeln bei Scroll
-    window.addEventListener('scroll', () => {
-        nav.classList.toggle('active', window.scrollY > 150);
-    }, { passive: true });
+    // Entfernt: Scroll-Animation des Headers (kein nav.active mehr)
+    // -> Keine Scroll-Listener für Header-Hintergrund nötig
 
     // Burger-Menü öffnen/schließen (Icon -> weißes Kreuz via CSS)
     if (navToggle) {
@@ -25,7 +23,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Gerätespezifische Logik
+    // Gerätespezifische Logik für Hero/Info (Desktop unverändert, Mobile stabil)
     const isMobile = window.matchMedia('(max-width: 480px)').matches;
 
     if (!isMobile) {

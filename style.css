@@ -1,5 +1,5 @@
 /* -------------------------------------------------
-   style.css – Dark Theme, Version 1.4.36
+   style.css – Dark Theme, Version 1.4.37
    ------------------------------------------------- */
 
 /* Reset */
@@ -55,27 +55,19 @@ body {
     padding: 0 20px;
 }
 
-/* NAVBAR */
+/* NAVBAR – dauerhaft schwarzer Balken, ohne Scroll-Animation */
 .nav {
     position: fixed;
     top: 0; left: 0; right: 0;
-    background-color: transparent;
-    transition: var(--transition);
+    background-color: #000;        /* dauerhaft schwarz */
     z-index: 1000;
     text-transform: uppercase;
+    /* keine Transition/Overlay mehr */
+    transition: none;
     overflow: visible;
 }
-.nav::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: #000;
-    opacity: 0;
-    transition: opacity .4s ease;
-    pointer-events: none;
-    z-index: 0;
-}
-.nav.active::before { opacity: 0.85; }
+/* Overlay & Aktiv-Zustand komplett entfernt */
+/* .nav::before und .nav.active entfallen */
 
 .nav .container {
     display: flex;
