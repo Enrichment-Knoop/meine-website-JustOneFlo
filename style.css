@@ -1,5 +1,5 @@
 /* -------------------------------------------------
-   style.css – Dark Theme, Version 1.4.28
+   style.css – Dark Theme, Version 1.4.29
    ------------------------------------------------- */
 
 /* Reset */
@@ -21,7 +21,6 @@
     font-weight: 200 700;
     font-display: swap;
 }
-
 @font-face {
     font-family: 'Roboto';
     src: url('fonts/Roboto-Regular.woff2') format('woff2'),
@@ -29,32 +28,20 @@
     font-weight: 400;
     font-display: swap;
 }
-
-/* Hilfsklasse: Roboto anwenden, ohne andere Styles zu ändern */
 .roboto { font-family: 'Roboto', sans-serif; }
 
 /* Farben & Variablen */
 :root {
     --bg-dark:       #0a0a0a;
     --text-light:    #f0f0f0;
-
-    /* Akzent im Layout (Info-Überschriften, Footer-Links etc.) */
     --accent-color:  #A45EE5;
-
-    /* Header-spezifischer Akzent (Navigation/Logo-Hover) */
     --header-accent: #A45EE5;
-
-    /* Für Button-Gradient (unverändert lassen) */
     --purple-light:  #9b5cb5;
     --purple-dark:   #5a2a8c;
-
     --gradient-purple: linear-gradient(90deg, var(--purple-light), var(--purple-dark), var(--purple-light));
-
     --glow-color:    rgba(179,126,251,0.6);
     --shine-color:   #A45EE5;
     --transition:    all 0.3s ease-in-out;
-
-    /* Headline-Font (Logo & Hero-H2) */
     --heading-font:  'StackSansNotch', sans-serif;
 }
 
@@ -65,7 +52,6 @@ body {
     color: var(--text-light);
     line-height: 1.6;
 }
-
 .container {
     max-width: 1200px;
     margin: 0 auto;
@@ -81,8 +67,8 @@ body {
     background-color: transparent;
     transition: var(--transition);
     z-index: 1000;
-    text-transform: uppercase; /* Gilt für Navigation; Logo wird unten ausgenommen */
-    overflow: visible;         /* wichtig für überlagerte Elemente */
+    text-transform: uppercase;
+    overflow: visible;               /* wichtig für das Burger‑Overlay */
 }
 .nav::before {
     content: "";
@@ -92,7 +78,7 @@ body {
     opacity: 0;
     transition: opacity .4s ease;
     pointer-events: none;
-    z-index: 0; /* Overlay hinter Inhalt halten */
+    z-index: 0;
 }
 .nav.active::before { opacity: 0.85; }
 
@@ -102,13 +88,11 @@ body {
     align-items: center;
     padding: 30px 0;
     position: relative;
-    z-index: 1; /* über Overlay */
+    z-index: 1;                     /* über dem schwarzen Overlay */
 }
 
 /* Logo */
 .logo-img { height: 30px; width: auto; vertical-align: middle; margin-right: 8px; }
-
-/* Logo-Text – nie unterstrichen; Hover mit sanfter Farb-Transition; stets über Overlay */
 .logo a {
     display: flex;
     align-items: center;
@@ -119,16 +103,13 @@ body {
     text-transform: none;
     transition: var(--transition);
     position: relative;
-    z-index: 2; /* ganz vorn */
+    z-index: 2;                     /* immer vorne */
 }
 .logo a:hover,
-.logo a:focus {
-    text-decoration: none;
-    color: var(--header-accent);
-}
-.logo a::after { content: none; display: none; }
+.logo a:focus { color: var(--header-accent); }
+.logo a::after { content: none; }
 
-/* Desktop-Navigation */
+/* Desktop‑Navigation */
 .nav ul {
     display: flex;
     list-style: none;
@@ -136,7 +117,7 @@ body {
     margin: 0;
     padding: 0;
     position: relative;
-    z-index: 2; /* über Overlay */
+    z-index: 2;
 }
 .nav ul a {
     position: relative;
@@ -164,17 +145,18 @@ body {
 .nav ul a:hover::after,
 .nav ul a.current::after { opacity: 1; }
 
-/* Burger-Button (mobil) */
+/* -------------------------------------------------
+   BURGER‑BUTTON (mobile)
+   ------------------------------------------------- */
 .nav-toggle {
-    display: none; /* Desktop verstecken */
+    display: none;                 /* Desktop: versteckt */
     width: 40px;
     height: 40px;
-    margin-left: 12px;
     border: none;
     background: transparent;
     cursor: pointer;
     position: relative;
-    z-index: 2; /* über Overlay */
+    z-index: 2;                     /* über dem Overlay */
 }
 .nav-toggle .burger,
 .nav-toggle .burger::before,
@@ -187,13 +169,13 @@ body {
     position: absolute;
     left: 50%;
     transform: translateX(-50%);
-    transition: transform .3s ease, opacity .3s ease, background-color .3s ease;
+    transition: transform .3s ease, opacity .3s ease;
 }
 .nav-toggle .burger { top: 50%; transform: translate(-50%, -50%); }
 .nav-toggle .burger::before { top: -8px; }
 .nav-toggle .burger::after  { top: 8px; }
 
-/* Burger-Animation beim Öffnen */
+/* Wenn das Menü geöffnet ist → Kreuz */
 .nav.open .nav-toggle .burger { opacity: 0; }
 .nav.open .nav-toggle .burger::before {
     transform: translateX(-50%) rotate(45deg);
@@ -216,14 +198,14 @@ body {
     justify-content: center;
     text-align: center;
     color: var(--text-light);
-    margin-top: 80px; /* Platz für feste Nav */
+    margin-top: 80px;               /* Platz für fixe Nav */
     filter: brightness(0.95);
 }
 .hero::before {
     content: "";
     position: absolute;
     inset: 0;
-    background: rgba(0, 0, 0, 0.5);
+    background: rgba(0,0,0,0.5);
 }
 
 /* Inhalt */
@@ -235,15 +217,15 @@ body {
 }
 .hide-hero .hero-content { opacity: 0; transform: translateY(-30px); }
 
-/* Hero-Überschrift – StackSansNotch (weiß) */
+/* Hero‑Überschrift */
 .hero-content h2 {
     font-family: var(--heading-font);
     font-size: 3rem;
-    margin-bottom: 0.5rem;
-    color: #ffffff;
+    margin-bottom: .5rem;
+    color: #fff;
 }
 
-/* Absatz über dem Button */
+/* Absatz */
 .hero-content p.roboto {
     font-family: 'Roboto', sans-serif;
     font-size: 1.1rem;
@@ -252,13 +234,13 @@ body {
 }
 
 /* -------------------------------------------------
-   CTA-Button – Optik wie vorher, Font = StackSansNotch
+   CTA‑Button
    ------------------------------------------------- */
 .cta-button {
     background: var(--gradient-purple);
     color: var(--text-light);
     border: none;
-    padding: 0.8rem 1.6rem;
+    padding: .8rem 1.6rem;
     font-size: 1rem;
     cursor: pointer;
     border-radius: 4px;
@@ -271,7 +253,7 @@ body {
         drop-shadow(0 0 6px var(--shine-color))
         drop-shadow(0 0 8px var(--shine-color));
 }
-.cta-button:hover { opacity: 0.9; }
+.cta-button:hover { opacity: .9; }
 
 /* -------------------------------------------------
    INFO
@@ -289,25 +271,15 @@ body {
 .info,
 .info p,
 .info li { font-family: "Noto Serif", serif; color: var(--text-light); }
-
 .info.roboto,
 .info p.roboto,
 .info li.roboto,
 .info h3.roboto,
 .info h4.roboto { font-family: 'Roboto', sans-serif; }
-
-.info ul.roboto li {
-    font-family: 'Roboto', sans-serif;
-    font-weight: 400;
-}
-
+.info ul.roboto li { font-family: 'Roboto', sans-serif; font-weight: 400; }
 .info h3,
-.info h4 {
-    color: var(--accent-color);
-    margin-top: 1.5rem;
-}
-
-.info ul { margin-top: 0.5rem; list-style: disc inside; }
+.info h4 { color: var(--accent-color); margin-top: 1.5rem; }
+.info ul { margin-top: .5rem; list-style: disc inside; }
 
 /* -------------------------------------------------
    FOOTER
@@ -318,75 +290,9 @@ body {
     background: rgba(0,0,0,0.8);
     text-align: center;
     padding: 1.5rem;
-    font-size: 0.9rem;
+    font-size: .9rem;
     font-family: "Noto Serif", serif;
 }
 .site-footer.visible { opacity: 1; }
 .site-footer a { color: var(--accent-color); text-decoration: none; }
-.site-footer a:hover { text-decoration: underline; }
-
-.site-footer.roboto,
-.site-footer p.roboto,
-.site-footer a.roboto { font-family: 'Roboto', sans-serif; }
-
-/* -------------------------------------------------
-   RESPONSIVE BREAKPOINTS (Smartphone-Optimierung)
-   ------------------------------------------------- */
-
-/* Tablet / kleine Laptops */
-@media (max-width: 768px) {
-    .hero-content h2 { font-size: 2.4rem; }
-    .hero-content p.roboto { font-size: 1rem; }
-    .cta-button { padding: 0.6rem 1.2rem; }
-}
-
-/* Smartphones */
-@media (max-width: 480px) {
-    /* Header zentral, Texte untereinander */
-    .nav .container {
-        flex-direction: column;
-        align-items: center;
-        padding: 16px 0;
-        gap: 10px;
-    }
-
-    /* Logo etwas kleiner */
-    .logo-img { height: 26px; margin-right: 6px; }
-    .logo a { font-size: 1.2rem; text-align: center; }
-
-    /* Burger anzeigen */
-    .nav-toggle { display: inline-block; }
-
-    /* Menü zusammenklappbar, zentral & untereinander */
-    .nav ul {
-        flex-direction: column;
-        align-items: center;
-        text-align: center;
-        gap: 0.8rem;
-        width: 100%;
-        max-height: 0;
-        overflow: hidden;
-        transition: max-height .3s ease;
-        padding-top: 0;
-        margin-top: 0;
-    }
-    .nav.open ul {
-        max-height: 260px; /* ausreichend für 4 Einträge */
-        padding-top: 6px;
-    }
-
-    /* Hover-Unterstreichung auf Mobile deaktivieren (optional, ruhiger) */
-    .nav ul a::after { display: none; }
-
-    /* Hero kompakter */
-    .hero { height: 70vh; }
-    .hero-content { padding: 1rem; }
-    .hero-content h2 { font-size: 2rem; }
-    .hero-content p.roboto { font-size: 0.95rem; }
-
-    /* Button kompakter */
-    .cta-button { padding: 0.5rem 1rem; font-size: 0.95rem; }
-
-    /* Info-Padding reduzieren */
-    .info { padding: 2rem 1rem; }
-}
+.site-footer a:hover { text-decoration: underline;
